@@ -10,6 +10,4 @@ public abstract class Medie {
         this.genre = genre;
         this.rating = rating;
     }
-
-
 }

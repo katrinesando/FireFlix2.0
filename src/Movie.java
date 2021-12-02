@@ -4,6 +4,7 @@ public class Movie extends Medie{
     public Movie(String title,String year,String genre, String rating) {
         super(title,year,genre,rating);
         this.title = title;
+        this.year = year;
         this.genre = genre;
         this.rating = rating;
     }

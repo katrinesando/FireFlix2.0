@@ -6,11 +6,11 @@ import java.util.Arrays;
 
 public class Streaming {
     //felter
-    ArrayList<String[]> arr;
-    String str;
-    String[] line;
-    Medie medie;
-    public Streaming() {
+    static ArrayList<String[]> arr;
+    static String str;
+    static String[] line;
+    static Medie medie;
+    public static void loadFile() {
         //inistatitere felter
         arr = new ArrayList<>();
         line = null;
@@ -22,9 +22,12 @@ public class Streaming {
                 medie = new Movie(line[0],line[1],line[2],line[3]);
                 //arr.add((str.trim().split(";")));
             }
-            System.out.println(Arrays.toString(arr.get(0))); //eksempel med at tage første element ud
-            System.out.println("Genre: "+medie.getYear());
+            //System.out.println(line[0]);
+            //System.out.println(Arrays.toString(arr.get(0))); //eksempel med at tage første element ud
+            System.out.println("title: "+medie.getTitle());
+            System.out.println("year: "+medie.getYear());
             System.out.println("Genre: "+medie.getGenre());
+            System.out.println("rating: "+medie.getRating());
             //tager og iterator igennem hele array'et
            /* for (String[] s : arr) {
                 String lineStr = Arrays.toString(s);
@@ -36,7 +39,6 @@ public class Streaming {
     }
 
     public static void main(String[] args) {
-        new Streaming();
-
+        loadFile();
     }
 }

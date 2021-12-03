@@ -1,3 +1,5 @@
 public abstract class Medie {
-    Hej - Rasmus
+    public static void main(String[] args) {
+        System.out.println("Hej fra Rasmus");
+    }
 }

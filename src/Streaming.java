@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Streaming {
     //felter
@@ -50,6 +51,7 @@ public class Streaming {
             System.out.println("Genre: "+medie.getGenre());
             System.out.println("rating: "+medie.getRating());
             //tager og iterator igennem hele array'et
+
         } catch (IOException e) {
             e.printStackTrace();
         }

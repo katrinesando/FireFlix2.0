@@ -7,6 +7,7 @@ public abstract class Medie {
 
     public Medie(String title, String year, String genre, String rating){
         this.title = title;
+        this.year = year;
         this.genre = genre;
         this.rating = rating;
     }

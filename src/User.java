@@ -11,20 +11,22 @@ public class User {
         this.age=age;
         myList= new ArrayList<>();
     }
-    public void addMedie(){
-        // try {
-        // if(!myList.contains(Medie)){
-        //    myList.add(Medie);}
-        //} catch ( MedieAlreadyAddedException e) {
-        // System.out.println(e.getName()+e.getMessage()); }
+    public void addMedie(Medie m){
+        try {
+        if(!myList.contains(m)){
+            myList.add(m);}
+        } catch ( MedieAlreadyAddedException e) {
+            System.out.println(e.getName()+e.getMessage()); }
     }
-    public void removeMedie(){
-        //myList.remove(Medie);
+    public void removeMedie(Medie m){
+        myList.remove(m);
     }
+    public void display(){
+        for(Medie m:myList){
 
-    public void displayMyList(){
-        //for(Medie m:medie){
-        //m.display;}
-    }
+                System.out.println(m.getTitle()+" "+m.getYear()+" "+m.getGenre()+" "+m.getRating());
 
+        }
+    }
 }
+

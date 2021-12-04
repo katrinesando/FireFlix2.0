@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Controller {
     ArrayList<User> users;
-//burde arrayListen af users blive initieret i main class når man starter programmet?
+
     public Controller(){
         users= new ArrayList<>();
 

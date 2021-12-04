@@ -25,7 +25,7 @@ public class User {
         for(Medie m:myList){
 
                 System.out.println(m.getTitle()+" "+m.getYear()+" "+m.getGenre()+" "+m.getRating());
-
+                //lave forskel på serier og medier
         }
     }
 }

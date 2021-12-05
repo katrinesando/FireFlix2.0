@@ -16,16 +16,22 @@ public class User {
         if(!myList.contains(m)){
             myList.add(m);}
         } catch ( MedieAlreadyAddedException e) {
-            System.out.println(e.getName()+e.getMessage()); }
+            if(m instanceof Movie a) {
+                System.out.println(a.getTitle() +" has already been added to your list");
+            } else if (m instanceof Serie b){
+                System.out.println(b.getTitle() +" has already been added to your list");
+            } }
     }
     public void removeMedie(Medie m){
         myList.remove(m);
     }
     public void display(){
         for(Medie m:myList){
-
-                System.out.println(m.getTitle()+" "+m.getYear()+" "+m.getGenre()+" "+m.getRating());
-                //lave forskel på serier og medier
+            if(m instanceof Movie a) {
+                System.out.println(a.getTitle() + " " + a.getYear() + " " + a.getGenre() + " " + a.getRating());
+            } else if (m instanceof Serie b){
+                System.out.println(b.getTitle() + " " + b.getYear() + " " + b.getGenre() + " " + b.getRating()+" "+b.getStartEnd());
+            }
         }
     }
 }

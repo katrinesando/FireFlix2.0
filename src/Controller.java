@@ -8,12 +8,15 @@ public class Controller {
 
     }
     public void addUser(String name, int age){
-        User user = new User(name,age);
-        users.add(user);
+        if(age>=0 && name!=null){
+            User user = new User(name,age);
+            users.add(user);
+        }
+
     }
-    public void deleteUser(){
+    public void deleteUser(User u){
         //actionlistener
-        //users.remove(user);
+        users.remove(u);
     }
     public void chooseUser(){
 

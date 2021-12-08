@@ -1,10 +1,7 @@
 public class MedieAlreadyAddedException extends RuntimeException{
-        String name;
 
-    public MedieAlreadyAddedException(){
-        super(" has already been added to your list");
+    public MedieAlreadyAddedException(String msg){
+        super(msg);
     }
-    public String getName(){
-        return name;
-    }
+
 }

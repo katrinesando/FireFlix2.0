@@ -1,11 +1,8 @@
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Streaming {
     //felter
@@ -16,6 +13,7 @@ public class Streaming {
 
     //loader filer for Movie og Serie
     private static void loadFile() {
+        arr = new ArrayList<>();
         try{
             //læser txt for film med BufferedReader og gemmer i Array
             BufferedReader br1 = new BufferedReader(new FileReader("src\\film.txt"));
@@ -47,6 +45,7 @@ public class Streaming {
         System.out.println(poster.size());
     }
     public static void main(String[] args) {
+        loadFile();
         poster();
     }
 }

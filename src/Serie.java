@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class Serie extends Medie {
-    String startEnd;
+    String episode;
 
-    public Serie(String title, String year, String genre, String rating,String startEnd) {
+    public Serie(String title, String year, String genre, String rating,String episode) {
         super(title,year, genre, rating);
-        this.startEnd =  startEnd;
+        this.episode =  episode;
     }
     @Override
     public BufferedImage getImage(String title) {
@@ -28,8 +28,8 @@ public class Serie extends Medie {
     }
 
     //getters unikt for Serie
-    public String getStartEnd(){
-        return startEnd;
+    public String getEpisode(){
+        return episode;
     }
     //getters fra Medie
     @Override

@@ -31,7 +31,7 @@ public class User {
             if(m instanceof Movie a) {
                 System.out.println(a.getTitle() + " " + a.getYear() + " " + a.getGenre() + " " + a.getRating());
             } else if (m instanceof Serie b){
-                System.out.println(b.getTitle() + " " + b.getYear() + " " + b.getGenre() + " " + b.getRating()+" "+b.getStartEnd());
+                System.out.println(b.getTitle() + " " + b.getYear() + " " + b.getGenre() + " " + b.getRating()+" "+b.getEpisode());
             }
         }
     }

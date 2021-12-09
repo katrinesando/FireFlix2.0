@@ -4,7 +4,7 @@ import javax.swing.*;
 
 
 public class VIEWVIEWVIEW {
-
+    private static JList list;
     public VIEWVIEWVIEW(){}
 
     public static void main (String[] args){
@@ -13,11 +13,16 @@ public class VIEWVIEWVIEW {
 
     private static void makeFrame(){
         JFrame frame = new JFrame("FireFlix");
-        frame.setSize(700, 700);
-        Container contentPane = frame.getContentPane();
+        frame.setPreferredSize(new Dimension(500, 500));
 
-        JLabel jLabel = new JLabel("Jlist");
-        contentPane.add(jLabel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        String[] movies1 = {"Lord of The Rings", "Star Wars", "Titanic","Indiana Jones","Love Actually","The Last Samurai"};
+
+        list = new JList(movies1);
+        JScrollPane scrollPane = new JScrollPane(list);
+        Container contentPane = frame.getContentPane();
+        contentPane.add(scrollPane);
+
 
         frame.pack();
         frame.setVisible(true);
@@ -34,6 +39,7 @@ public class VIEWVIEWVIEW {
         menubar.add(userMenu);
 
 
+
         JMenuItem filmItem = new JMenuItem("Film");
         filmItem.addActionListener((ActionEvent e) -> System.out.println("film"));
         filmMenu.add(filmItem);
@@ -43,8 +49,9 @@ public class VIEWVIEWVIEW {
         seriesMenu.add(seriesItem);
 
         JMenuItem userItem = new JMenuItem("Brugere");
-        userItem.addActionListener(VIEWVIEWVIEW::actionPerformed);
+        seriesItem.addActionListener((ActionEvent e) -> System.out.println("brugere"));
         userMenu.add(userItem);
+
 
         JMenuItem crimeItem = new JMenuItem("Crime");
         genreMenu.add(crimeItem);
@@ -55,10 +62,7 @@ public class VIEWVIEWVIEW {
         JMenuItem adventureItem = new JMenuItem("Adventure");
         genreMenu.add(adventureItem);
 
+        //have en liste som vi displayer  i contenpane, og vi istedet har flere forskellige list som vi bare skifter imellem
 
-    }
-
-    private static void actionPerformed(ActionEvent e) {
-        System.out.println("brugere");
     }
 }

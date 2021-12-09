@@ -11,20 +11,29 @@ public class User {
         this.age=age;
         myList= new ArrayList<>();
     }
-    public void addMedie(){
-        // try {
-        // if(!myList.contains(Medie)){
-        //    myList.add(Medie);}
-        //} catch ( MedieAlreadyAddedException e) {
-        // System.out.println(e.getName()+e.getMessage()); }
-    }
-    public void removeMedie(){
-        //myList.remove(Medie);
-    }
 
+    public void addMedie(Medie m) throws MedieAlreadyAddedException{
+        if(!myList.contains(m)){
+            myList.add(m);}
+        else {
+            if(m instanceof Movie a) {
+                throw new MedieAlreadyAddedException(a.getTitle() +" has already been added to your list");
+            } else if (m instanceof Serie b){
+                throw new MedieAlreadyAddedException(b.getTitle() +" has already been added to your list");
+            }
+        }
+    }
+    public void removeMedie(Medie m){
+        myList.remove(m);
+    }
     public void displayMyList(){
-        //for(Medie m:medie){
-        //m.display;}
+        for(Medie m:myList){
+            if(m instanceof Movie a) {
+                System.out.println(a.getTitle() + " " + a.getYear() + " " + a.getGenre() + " " + a.getRating());
+            } else if (m instanceof Serie b){
+                System.out.println(b.getTitle() + " " + b.getYear() + " " + b.getGenre() + " " + b.getRating()+" "+b.getStartEnd());
+            }
+        }
     }
-
 }
+

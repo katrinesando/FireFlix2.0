@@ -1,9 +1,15 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class Serie extends Medie {
     String episode;
 
     public Serie(String title, String year, String genre, String rating,String episode) {
         super(title,year, genre, rating);
         this.episode =  episode;
+
     }
 
     //getters unikt for Serie

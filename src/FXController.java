@@ -76,7 +76,6 @@ public class FXController implements Initializable {
                 Image image = new Image(fl);
 
                 ImageView imgTest = new ImageView(image);
-
                 imgTest.setImage(image);
 
                 pane.add(imgTest,x,y);

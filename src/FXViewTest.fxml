@@ -76,7 +76,7 @@
     </TabPane>
       <Pane fx:id="userPane" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="btn" alignment="CENTER" layoutX="571.0" layoutY="321.0" mnemonicParsing="false" onAction="#userBtn" prefHeight="112.0" prefWidth="146.0" text="First User" />
+            <Button fx:id="btn" alignment="CENTER" layoutX="571.0" layoutY="321.0" mnemonicParsing="false" onAction="#userBtn" prefHeight="112.0" prefWidth="146.0" text="Create User" />
          </children>
       </Pane>
   </children>

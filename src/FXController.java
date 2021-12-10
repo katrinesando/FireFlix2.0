@@ -29,7 +29,7 @@ public class FXController implements Initializable {
 
     public void loadFileMovie() {
         //inistatitere felter
-        try (BufferedReader br = new BufferedReader(new FileReader("src\\film.txt"))) //åbner fil og begynder at læse igennem
+        try (BufferedReader br = new BufferedReader(new FileReader("src/film.txt"))) //åbner fil og begynder at læse igennem
         {
             String[] line = null;
             //kører hele fil igennem indtil der ikke er mere og tilføjer dem til array
@@ -44,7 +44,7 @@ public class FXController implements Initializable {
         }
     }
     public void loadFileSerie(){
-        try (BufferedReader br = new BufferedReader(new FileReader("src\\serier.txt"))) //åbner fil og begynder at læse igennem
+        try (BufferedReader br = new BufferedReader(new FileReader("src/serier.txt"))) //åbner fil og begynder at læse igennem
         {
             String[] line = null;
             //kører hele fil igennem indtil der ikke er mere og tilføjer dem til array

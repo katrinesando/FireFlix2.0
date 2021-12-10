@@ -25,7 +25,7 @@ public class FXTest extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(FXTest.class.getResource("FXViewTest.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Sup");
         stage.setScene(scene);
         stage.show();

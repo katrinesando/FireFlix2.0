@@ -1,11 +1,12 @@
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Rectangle;
 
 import java.io.*;
 import java.net.URL;
@@ -16,9 +17,13 @@ public class FXController implements Initializable {
     @FXML
     private GridPane pane;
     @FXML
-    private javafx.scene.control.ScrollPane scrollPane;
+    private ScrollPane scrollPane;
     @FXML
     private GridPane paneSerie;
+    @FXML
+    private Pane userPane;
+    @FXML
+    private Button btn;
     @FXML
     private TabPane tab;
     @FXML
@@ -60,7 +65,7 @@ public class FXController implements Initializable {
     }
 
     @FXML
-    private void initialize() throws FileNotFoundException {
+    private void initializeMovie() throws FileNotFoundException {
         int x = 1;//1 virker
         int y = 3;//3 virker
 
@@ -88,7 +93,6 @@ public class FXController implements Initializable {
             }
         }
     }
-
     @FXML
     private void initializeSerie() throws FileNotFoundException {
         int x = 1;
@@ -117,17 +121,20 @@ public class FXController implements Initializable {
             }
         }
     }
-
+    @FXML
+    private void userBtn(){
+        userPane.setVisible(false);
+        tab.setVisible(true);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         arr = new ArrayList<Medie>();
-
         loadFileMovie();
         loadFileSerie();
         System.out.println(m.getTitle());
         try {
-            initialize();
+            initializeMovie();
             initializeSerie();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

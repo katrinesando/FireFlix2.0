@@ -72,7 +72,7 @@ public class FXController implements Initializable {
 
         for(Medie m : arr){
             if(m instanceof Movie){
-                FileInputStream fl = new FileInputStream("src\\filmplakater\\"+m.getTitle()+".jpg");
+                FileInputStream fl = new FileInputStream("src/filmplakater/"+m.getTitle()+".jpg");
                 Image image = new Image(fl);
 
                 ImageView imgTest = new ImageView(image);
@@ -99,7 +99,7 @@ public class FXController implements Initializable {
 
         for(Medie m : arr){
             if(m instanceof Serie){
-                FileInputStream fl = new FileInputStream("src\\serieforsider\\"+m.getTitle()+".jpg");
+                FileInputStream fl = new FileInputStream("src/serieforsider/"+m.getTitle()+".jpg");
                 javafx.scene.image.Image image = new Image(fl);
 
                 javafx.scene.image.ImageView imgTest = new javafx.scene.image.ImageView(image);

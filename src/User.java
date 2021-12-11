@@ -1,12 +1,12 @@
 import java.util.*;
 
 public class User {
-    String name;
-    int age;
+    String name="";
+    String age="";
     //Have en dropdown menu hvor man kan vælge farve ens "avatar" skal have
     ArrayList<Medie> myList;
 
-    public User(String name, int age){
+    public User(String name, String age){
         this.name=name;
         this.age=age;
         myList= new ArrayList<>();

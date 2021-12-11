@@ -19,7 +19,9 @@ public class FXController implements Initializable {
     @FXML
     private GridPane pane;
     @FXML
-    private GridPane paneSerie1;
+    private GridPane paneMyList;
+    @FXML
+    private GridPane paneUsers;
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -32,10 +34,34 @@ public class FXController implements Initializable {
     private TabPane tab;
     @FXML
     private AnchorPane root;
+    @FXML
+    private TextField username;
+    @FXML
+    private TextField age;
+    @FXML
+    private Button searchMovieButton;
+    @FXML
+    private TextField searchMovieBar;
+    @FXML
+    private Button changeUserMovieButton;
+
+
+    @FXML
+    private Button searchSerieButton;
+    @FXML
+    private TextField searchSerieBar;
+    @FXML
+    private Button searchMyListButton;
+    @FXML
+    private TextField searchMyListBar;
+
+
+
     public Medie m;
     private static ArrayList<Medie> arr;
     private static String str;
-    private static ArrayList<Medie> myList = new ArrayList<>();
+    private static ArrayList<Medie> myList;
+    //private static ArrayList<User> users;
 
     public void loadFileMovie() {
         //inistatitere felter
@@ -130,45 +156,30 @@ public class FXController implements Initializable {
     }
 
     @FXML
-    private void userBtn() {
+    private void userBtn() throws FileNotFoundException {
         userPane.setVisible(false);
         tab.setVisible(true);
+        //users.add(new User((username.getText()),(age.getText())));
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        arr = new ArrayList<Medie>();
-        loadFileMovie();
-        loadFileSerie();
-        //System.out.println(m.getTitle());
-        try {
-            initializeMovie();
-            initializeSerie();
-            initializeMyList();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        //clipChildren(pane);
+    @FXML
+    private void changeUserMovieButton() throws FileNotFoundException {
+        tab.setVisible(false);
+        userPane.setVisible(true);
     }
 
     private void initializeMyList() throws FileNotFoundException {
 
         int x = 0;//1 virker
         int y = 0;//3 virker
+        //tilføjer en masse tilfældeige medier til MyList
+        myList.add(arr.get(1)); myList.add(arr.get(14)); myList.add(arr.get(27)); myList.add(arr.get(40));myList.add(arr.get(102));myList.add(arr.get(150));myList.add(arr.get(170));
 
-        myList.add(arr.get(1));
-        myList.add(arr.get(14));
-        myList.add(arr.get(27));
-        myList.add(arr.get(40));
-        myList.add(arr.get(102));
-        myList.add(arr.get(150));
-        myList.add(arr.get(170));
-
-        paneSerie1.addRow(10);
+        paneMyList.addRow(10);
         ColumnConstraints cc = new ColumnConstraints(100, 100, Double.MAX_VALUE,
                 Priority.ALWAYS, HPos.CENTER, true);
-        paneSerie1.getColumnConstraints().addAll(cc, cc);
-        paneSerie1.setHgrow(scrollPane, Priority.ALWAYS);
+        paneMyList.getColumnConstraints().addAll(cc, cc);
+        paneMyList.setHgrow(scrollPane, Priority.ALWAYS);
 
         for (Medie m : myList) {
 
@@ -179,7 +190,7 @@ public class FXController implements Initializable {
                 ImageView imgTest = new ImageView(image);
                 imgTest.setImage(image);
 
-                paneSerie1.add(imgTest, x, y);
+                paneMyList.add(imgTest, x, y);
                 x++;
                 //y++;
                 if (x == 10) {
@@ -193,7 +204,7 @@ public class FXController implements Initializable {
 
                 javafx.scene.image.ImageView imgTest = new javafx.scene.image.ImageView(image);
                 imgTest.setImage(image);
-                paneSerie1.add(imgTest, x, y);
+                paneMyList.add(imgTest, x, y);
                 x++;
                 //y++;
                 if (x == 10) {
@@ -202,8 +213,23 @@ public class FXController implements Initializable {
                 }
             }
         }
+    }
 
-
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        arr = new ArrayList<Medie>();
+        myList = new ArrayList<Medie>();
+        loadFileMovie();
+        loadFileSerie();
+        //System.out.println(m.getTitle());
+        try {
+            initializeMovie();
+            initializeSerie();
+            initializeMyList();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        //clipChildren(pane);
     }
 }
 

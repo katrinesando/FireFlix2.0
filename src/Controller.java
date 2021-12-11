@@ -7,8 +7,8 @@ public class Controller {
         users= new ArrayList<>();
 
     }
-    public void addUser(String name, int age){
-        if(age>=0 && name!=null){
+    public void addUser(String name, String age){
+        if(age!=null && name!=null){
             User user = new User(name,age);
             users.add(user);
         }

@@ -26,7 +26,7 @@ public class FXTest extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(FXTest.class.getResource("FXViewTest.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Sup");
+        stage.setTitle("FireFlix");
         stage.setScene(scene);
         stage.show();
     }

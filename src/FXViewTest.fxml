@@ -50,8 +50,8 @@
                     </GridPane>
                   </content>
                 </ScrollPane>
-                        <TextField layoutX="975.0" layoutY="10.0" />
-                        <Button layoutX="910.0" layoutY="10.0" mnemonicParsing="false" text="Search" />
+                        <TextField fx:id="searchMovieBar" layoutX="975.0" layoutY="10.0" />
+                        <Button fx:id="searchMovieButton" layoutX="910.0" layoutY="10.0" mnemonicParsing="false" onAction="#searchMovieInput" text="Search" />
                         <MenuButton layoutX="830.0" layoutY="10.0" mnemonicParsing="false" text="Genre">
                           <items>
                             <MenuItem mnemonicParsing="false" text="Adventure" />

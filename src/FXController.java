@@ -39,8 +39,6 @@ public class FXController implements Initializable {
     @FXML
     private TextField age;
     @FXML
-    private Button searchMovieButton;
-    @FXML
     private TextField searchMovieBar;
     @FXML
     private Button changeUserMovieButton;
@@ -56,11 +54,11 @@ public class FXController implements Initializable {
     private TextField searchMyListBar;
 
 
-
     public Medie m;
     private static ArrayList<Medie> arr;
     private static String str;
     private static ArrayList<Medie> myList;
+    private static ArrayList<Medie> searchList;
     //private static ArrayList<User> users;
 
     public void loadFileMovie() {
@@ -173,7 +171,13 @@ public class FXController implements Initializable {
         int x = 0;//1 virker
         int y = 0;//3 virker
         //tilføjer en masse tilfældeige medier til MyList
-        myList.add(arr.get(1)); myList.add(arr.get(14)); myList.add(arr.get(27)); myList.add(arr.get(40));myList.add(arr.get(102));myList.add(arr.get(150));myList.add(arr.get(170));
+        myList.add(arr.get(1));
+        myList.add(arr.get(14));
+        myList.add(arr.get(27));
+        myList.add(arr.get(40));
+        myList.add(arr.get(102));
+        myList.add(arr.get(150));
+        myList.add(arr.get(170));
 
         paneMyList.addRow(10);
         ColumnConstraints cc = new ColumnConstraints(100, 100, Double.MAX_VALUE,
@@ -231,5 +235,46 @@ public class FXController implements Initializable {
         }
         //clipChildren(pane);
     }
+
+    public void searchInput() throws FileNotFoundException {
+        searchList = new ArrayList<>();
+
+        int x=0;
+        int y=3;
+        paneMyList.addRow(10);
+        ColumnConstraints cc = new ColumnConstraints(100, 100, Double.MAX_VALUE,
+                Priority.ALWAYS, HPos.CENTER, true);
+        paneMyList.getColumnConstraints().addAll(cc, cc);
+        paneMyList.setHgrow(scrollPane, Priority.ALWAYS);
+
+        for (Medie m : arr) {
+            if (m.getTitle().toLowerCase().contains(searchMovieBar.getText().toLowerCase())) {
+                searchList.add(m);
+            }
+
+        }
+        for (Medie m : searchList) {
+
+            if (m instanceof Movie) {
+                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
+                Image image = new Image(fl);
+
+                ImageView imgTest = new ImageView(image);
+                imgTest.setImage(image);
+
+                pane.add(imgTest, x, y);
+                x++;
+                //y++;
+                if (x == 10) {
+                    y++;
+                    x = 0;
+                }
+            }
+
+        }
+    }
+
+    @FXML
+    private Button searchMovieButton;
 }
 

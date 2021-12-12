@@ -51,7 +51,7 @@
                   </content>
                 </ScrollPane>
                         <TextField fx:id="searchMovieBar" layoutX="975.0" layoutY="10.0" />
-                        <Button fx:id="searchMovieButton" layoutX="910.0" layoutY="10.0" mnemonicParsing="false" onAction="#searchMovieInput" text="Search" />
+                        <Button fx:id="searchMovieButton" layoutX="910.0" layoutY="10.0" mnemonicParsing="false" onAction="#searchInput" text="Search" />
                         <MenuButton layoutX="830.0" layoutY="10.0" mnemonicParsing="false" text="Genre">
                           <items>
                             <MenuItem mnemonicParsing="false" text="Adventure" />

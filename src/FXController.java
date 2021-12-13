@@ -1,6 +1,5 @@
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,7 +55,7 @@ public class FXController implements Initializable {
     private static ArrayList<Medie> myList;
     private static ArrayList<Medie> searchList;
     private static ArrayList<ImageView> movieImages;
-    private static ArrayList<ImageView> SerieImages;
+    private static ArrayList<ImageView> serieImages;
     //private static ArrayList<User> users;
 
     public void loadFileMovie() {
@@ -125,7 +124,7 @@ public class FXController implements Initializable {
         int y = 3;
 
         ImageView img = new ImageView();
-        SerieImages = new ArrayList<>();
+        serieImages = new ArrayList<>();
         for (Medie m : arr) {
             if (m instanceof Serie) {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
@@ -133,7 +132,7 @@ public class FXController implements Initializable {
 
                 img = new ImageView(image);
                 img.setImage(image);
-                SerieImages.add(img);
+                serieImages.add(img);
                 paneSerie.add(img, x, y);
                 x++;
                 if (x == 10) {
@@ -227,6 +226,8 @@ public class FXController implements Initializable {
 
     public void searchInput() throws FileNotFoundException {
         searchList = new ArrayList<>();
+        pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
+        paneSerie.getChildren().removeAll(serieImages); //fjerner alle images fra gridpane
 
         int x=0;
         int y=3;
@@ -235,17 +236,20 @@ public class FXController implements Initializable {
             if (m.getTitle().toLowerCase().contains(searchBar.getText().toLowerCase())) {
                 searchList.add(m);
             }
-
+        }
+        if(searchList.size()<7){
+            y=0;
         }
         for (Medie m : searchList) {
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                ImageView imgTest = new ImageView(image);
-                imgTest.setImage(image);
-                pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
-                pane.add(imgTest, x, y);
+                ImageView img = new ImageView(image);
+                img.setImage(image);
+                movieImages.add(img);
+
+                pane.add(img, x, y);
                 x++;
                 if (x == 10) {
                     y++;
@@ -256,10 +260,10 @@ public class FXController implements Initializable {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                ImageView imgTest = new ImageView(image);
-                imgTest.setImage(image);
-                paneSerie.getChildren().removeAll(SerieImages); //fjerner alle images fra gridpane
-                paneSerie.add(imgTest, x, y);
+                ImageView img = new ImageView(image);
+                img.setImage(image);
+                serieImages.add(img);
+                paneSerie.add(img, x, y);
                 x++;
                 //y++;
                 if (x == 10) {
@@ -308,6 +312,8 @@ public class FXController implements Initializable {
 
     public void searchGenre(String input) throws FileNotFoundException {
         searchList = new ArrayList<>();
+        pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
+        paneSerie.getChildren().removeAll(serieImages); //fjerner alle images fra gridpane
 
         int x = 0;
         int y = 3;
@@ -317,15 +323,19 @@ public class FXController implements Initializable {
                 searchList.add(m);
             }
         }
+        if(searchList.size()<7){
+            y=0;
+        }
         for (Medie m : searchList) {
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                ImageView imgTest = new ImageView(image);
-                imgTest.setImage(image);
-                pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
-                pane.add(imgTest, x, y);
+                ImageView img = new ImageView(image);
+                img.setImage(image);
+                movieImages.add(img);
+
+                pane.add(img, x, y);
                 x++;
                 //y++;
                 if (x == 10) {
@@ -337,10 +347,10 @@ public class FXController implements Initializable {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                ImageView imgTest = new ImageView(image);
-                imgTest.setImage(image);
-                paneSerie.getChildren().removeAll(SerieImages); //fjerner alle images fra gridpane
-                paneSerie.add(imgTest, x, y);
+                ImageView img = new ImageView(image);
+                img.setImage(image);
+                serieImages.add(img);
+                paneSerie.add(img, x, y);
                 x++;
                 //y++;
                 if (x == 10) {

@@ -1,7 +1,5 @@
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,14 +8,10 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class FXController implements Initializable {
     @FXML
@@ -60,6 +54,8 @@ public class FXController implements Initializable {
     private static String str;
     private static ArrayList<Medie> myList;
     private static ArrayList<Medie> searchList;
+    private static ArrayList<ImageView> movieImages;
+    private static ArrayList<ImageView> serieImages;
     //private static ArrayList<User> users;
 
     public void loadFileMovie() {
@@ -100,17 +96,17 @@ public class FXController implements Initializable {
         int x = 0;//1 virker
         int y = 3;//3 virker
 
-        ImageView imgTest = new ImageView();
-
+        ImageView img = new ImageView();
+        movieImages = new ArrayList<>();
         for (Medie m : arr) {
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                imgTest = new ImageView(image);
-                imgTest.setImage(image);
-
-                pane.add(imgTest, x, y);
+                img = new ImageView(image);
+                img.setImage(image);
+                movieImages.add(img);
+                pane.add(img, x, y);
                 x++;
                 //y++;
                 if (x == 10) {
@@ -118,7 +114,7 @@ public class FXController implements Initializable {
                     x = 0;
                 }
             }
-            getInfo(imgTest,m);
+            getInfo(img,m);
         }
     }
 
@@ -127,22 +123,24 @@ public class FXController implements Initializable {
         int x = 0;
         int y = 3;
 
-        ImageView imgTest = new ImageView();
+        ImageView img = new ImageView();
+        serieImages = new ArrayList<>();
         for (Medie m : arr) {
             if (m instanceof Serie) {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                imgTest = new ImageView(image);
-                imgTest.setImage(image);
-                paneSerie.add(imgTest, x, y);
+                img = new ImageView(image);
+                img.setImage(image);
+                serieImages.add(img);
+                paneSerie.add(img, x, y);
                 x++;
                 if (x == 10) {
                     y++;
                     x = 0;
                 }
             }
-            getInfo(imgTest,m);
+            getInfo(img,m);
         }
     }
 
@@ -175,14 +173,7 @@ public class FXController implements Initializable {
         myList.add(arr.get(150));
         myList.add(arr.get(170));
 
-        paneMyList.addRow(10);
-        ColumnConstraints cc = new ColumnConstraints(100, 100, Double.MAX_VALUE,
-                Priority.ALWAYS, HPos.CENTER, true);
-        paneMyList.getColumnConstraints().addAll(cc, cc);
-        paneMyList.setHgrow(scrollPane, Priority.ALWAYS);
-
         for (Medie m : myList) {
-
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
@@ -235,33 +226,31 @@ public class FXController implements Initializable {
 
     public void searchInput() throws FileNotFoundException {
         searchList = new ArrayList<>();
+        pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
+        paneSerie.getChildren().removeAll(serieImages); //fjerner alle images fra gridpane
 
         int x=0;
         int y=3;
-        paneMyList.addRow(10);
-        ColumnConstraints cc = new ColumnConstraints(100, 100, Double.MAX_VALUE,
-                Priority.ALWAYS, HPos.CENTER, true);
-        paneMyList.getColumnConstraints().addAll(cc, cc);
-        paneMyList.setHgrow(scrollPane, Priority.ALWAYS);
 
         for (Medie m : arr) {
             if (m.getTitle().toLowerCase().contains(searchBar.getText().toLowerCase())) {
                 searchList.add(m);
             }
-
+        }
+        if(searchList.size()<7){
+            y=0;
         }
         for (Medie m : searchList) {
-
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                ImageView imgTest = new ImageView(image);
-                imgTest.setImage(image);
+                ImageView img = new ImageView(image);
+                img.setImage(image);
+                movieImages.add(img);
 
-                pane.add(imgTest, x, y);
+                pane.add(img, x, y);
                 x++;
-                //y++;
                 if (x == 10) {
                     y++;
                     x = 0;
@@ -271,10 +260,10 @@ public class FXController implements Initializable {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                ImageView imgTest = new ImageView(image);
-                imgTest.setImage(image);
-
-                paneSerie.add(imgTest, x, y);
+                ImageView img = new ImageView(image);
+                img.setImage(image);
+                serieImages.add(img);
+                paneSerie.add(img, x, y);
                 x++;
                 //y++;
                 if (x == 10) {
@@ -323,30 +312,30 @@ public class FXController implements Initializable {
 
     public void searchGenre(String input) throws FileNotFoundException {
         searchList = new ArrayList<>();
+        pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
+        paneSerie.getChildren().removeAll(serieImages); //fjerner alle images fra gridpane
 
         int x = 0;
         int y = 3;
-        paneMyList.addRow(10);
-        ColumnConstraints cc = new ColumnConstraints(100, 100, Double.MAX_VALUE,
-                Priority.ALWAYS, HPos.CENTER, true);
-        paneMyList.getColumnConstraints().addAll(cc, cc);
-        paneMyList.setHgrow(scrollPane, Priority.ALWAYS);
 
         for (Medie m : arr) {
             if (m.getGenre().toLowerCase().contains(input.toLowerCase())) {
                 searchList.add(m);
             }
         }
+        if(searchList.size()<7){
+            y=0;
+        }
         for (Medie m : searchList) {
-
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                ImageView imgTest = new ImageView(image);
-                imgTest.setImage(image);
+                ImageView img = new ImageView(image);
+                img.setImage(image);
+                movieImages.add(img);
 
-                pane.add(imgTest, x, y);
+                pane.add(img, x, y);
                 x++;
                 //y++;
                 if (x == 10) {
@@ -358,10 +347,10 @@ public class FXController implements Initializable {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                ImageView imgTest = new ImageView(image);
-                imgTest.setImage(image);
-
-                paneSerie.add(imgTest, x, y);
+                ImageView img = new ImageView(image);
+                img.setImage(image);
+                serieImages.add(img);
+                paneSerie.add(img, x, y);
                 x++;
                 //y++;
                 if (x == 10) {

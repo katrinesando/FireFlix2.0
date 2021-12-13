@@ -371,7 +371,7 @@ public class FXController implements Initializable {
             }
         }
     }
-    
+
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
     @FXML private MenuItem adventureItem;
     public void searchBiography() throws FileNotFoundException {searchGenre( "Biography");}

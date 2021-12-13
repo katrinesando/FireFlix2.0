@@ -276,5 +276,10 @@ public class FXController implements Initializable {
 
     @FXML
     private Button searchMovieButton;
+    @FXML
+    private Button RefreshButton;
+
 }
+
+
 

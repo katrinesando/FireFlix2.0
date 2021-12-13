@@ -15,36 +15,28 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class FXController implements Initializable {
-    @FXML private GridPane pane;
-    @FXML private GridPane paneMyList;
-    @FXML private GridPane paneUsers;
+    @FXML private GridPane pane,paneMyList,paneUsers,paneSerie,paneNewUser;
     @FXML private ScrollPane scrollPane;
-    @FXML private GridPane paneSerie;
     @FXML private Pane userPane;
-    @FXML private Button btn;
     @FXML private TabPane tab;
     @FXML private AnchorPane root;
-    @FXML private TextField username;
-    @FXML private Text noGenreError;
-    @FXML private Text noSearchMovieError;
-    @FXML private Text noSearchSerieError;
-    @FXML private TextField age;
-    @FXML private TextField searchBar;
-    @FXML private Button changeButton;
-    @FXML private Button refreshButton;
-    @FXML private Button searchButton;
+    @FXML private TextField username,age,searchBar;
+    @FXML private Text noGenreError,noSearchMovieError,noSearchSerieError;
+    @FXML private Button changeButton,refreshButton,searchButton,changeUserButton,btn;
     @FXML private ToolBar toolBar;
-    @FXML private Button changeUserButton;
+    @FXML private MenuItem adventureItem,biographyItem,crimeItem,comedyItem,dramaItem,familyItem,fantasyItem,filmNoirItem,historyItem,
+            horrorItem,musicalItem,musicItem,mysteryItem,romanceItem,sciFiItem,sportItem,thrillerItem,warItem,westernItem;
 
     public Medie m;
     private static ArrayList<Medie> arr;
     private static String str;
-    private static ArrayList<Medie> myList;
+    private static ArrayList<Medie> myList,searchListMovie,searchListSerie;
     private static ArrayList<Medie> searchList;
-    private static ArrayList<Medie> searchListMovie;
-    private static ArrayList<Medie> searchListSerie;
-    private static ArrayList<ImageView> movieImages;
-    private static ArrayList<ImageView> serieImages;
+    private static ArrayList<ImageView> movieImages,serieImages;
+    private int userAmount = 0,x=0;
+    private static ArrayList<Button> newUsersBtn;
+    public Alert alert;
+    private User user;
     //private static ArrayList<User> users;
 
     public void loadFileMovie() {
@@ -87,6 +79,8 @@ public class FXController implements Initializable {
 
         ImageView img = new ImageView();
         movieImages = new ArrayList<>();
+        newUsersBtn = new ArrayList<>();
+        alert = new Alert(Alert.AlertType.NONE);
         for (Medie m : arr) {
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
@@ -135,14 +129,30 @@ public class FXController implements Initializable {
 
     @FXML
     private void userBtn() throws FileNotFoundException {
-        userPane.setVisible(false);
-        tab.setVisible(true);
-        toolBar.setVisible(true);
-        //users.add(new User((username.getText()),(age.getText())));
+        //tilføjer user
+        if(userAmount<4){
+            user = new User(username.getText(),age.getText());
+            Button newUser = new Button();
+            paneNewUser.add(new Button(user.getName()),x,0);
+            newUsersBtn.add(newUser);
+            newUser.setVisible(false);
+            x++;userAmount++;
+        }else{//hvis der er flere end 4 user
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.show();
+        }
+        if(!alert.isShowing()){ //går kun videre, hvis alert ikke er vidst
+            userPane.setVisible(false);
+            tab.setVisible(true);
+            toolBar.setVisible(true);
+        }
     }
 
     @FXML
     private void changeUser() throws FileNotFoundException {
+        for(Button b : newUsersBtn){
+            b.setVisible(true);
+        }
         tab.setVisible(false);
         userPane.setVisible(true);
         toolBar.setVisible(false);
@@ -407,44 +417,24 @@ public class FXController implements Initializable {
     }
 
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
-    @FXML private MenuItem adventureItem;
     public void searchBiography() throws FileNotFoundException {searchGenre( "Biography");}
-    @FXML private MenuItem biographyItem;
     public void searchCrime() throws FileNotFoundException {searchGenre( "Crime");}
-    @FXML private MenuItem crimeItem;
     public void searchComedy() throws FileNotFoundException {searchGenre( "Comedy");}
-    @FXML private MenuItem comedyItem;
     public void searchDrama() throws FileNotFoundException {searchGenre( "Drama");}
-    @FXML private MenuItem dramaItem;
     public void searchFamily() throws FileNotFoundException {searchGenre( "Family");}
-    @FXML private MenuItem familyItem;
     public void searchFantasy() throws FileNotFoundException {searchGenre( "Fantasy");}
-    @FXML private MenuItem fantasyItem;
     public void searchFilmNoir() throws FileNotFoundException {searchGenre( "Film-Noir");}
-    @FXML private MenuItem filmNoirItem;
     public void searchHistory() throws FileNotFoundException {searchGenre( "History");}
-    @FXML private MenuItem historyItem;
     public void searchHorror() throws FileNotFoundException {searchGenre( "Horror");}
-    @FXML private MenuItem horrorItem;
     public void searchMusical() throws FileNotFoundException {searchGenre( "Musical");}
-    @FXML private MenuItem musicalItem;
     public void searchMusic() throws FileNotFoundException {searchGenre( "Music");}
-    @FXML private MenuItem musicItem;
     public void searchMystery() throws FileNotFoundException {searchGenre( "Mystery");}
-    @FXML private MenuItem mysteryItem;
     public void searchRomance() throws FileNotFoundException {searchGenre( "Romance");}
-    @FXML private MenuItem romanceItem;
     public void searchSciFi() throws FileNotFoundException {searchGenre( "Sci-fi");}
-    @FXML private MenuItem sciFiItem;
     public void searchSport() throws FileNotFoundException {searchGenre( "Sport");}
-    @FXML private MenuItem sportItem;
     public void searchThriller() throws FileNotFoundException {searchGenre( "Thriller");}
-    @FXML private MenuItem thrillerItem;
     public void searchWar() throws FileNotFoundException {searchGenre( "War");}
-    @FXML private MenuItem warItem;
     public void searchWestern() throws FileNotFoundException {searchGenre( "Western");}
-    @FXML private MenuItem westernItem;
-
 
 }
 

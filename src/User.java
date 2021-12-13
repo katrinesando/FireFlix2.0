@@ -12,7 +12,9 @@ public class User {
         myList= new ArrayList<>();
     }
 
-
+    public String getName(){
+        return name;
+    }
     public void removeMedie(Medie m){
         myList.remove(m);
     }

@@ -14,46 +14,31 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class FXController implements Initializable {
-    @FXML
-    private GridPane pane;
-    @FXML
-    private GridPane paneMyList;
-    @FXML
-    private GridPane paneUsers;
-    @FXML
-    private ScrollPane scrollPane;
-    @FXML
-    private GridPane paneSerie;
-    @FXML
-    private Pane userPane;
-    @FXML
-    private Button btn;
-    @FXML
-    private TabPane tab;
-    @FXML
-    private AnchorPane root;
-    @FXML
-    private TextField username;
-    @FXML
-    private TextField age;
-    @FXML
-    private TextField searchBar;
-    @FXML
-    private Button changeButton;
-    @FXML
-    private Button refreshButton;
-    @FXML
-    private Button searchButton;
-    @FXML
-    private ToolBar toolBar;
-    @FXML
-    private Button changeUserButton;
+    @FXML private GridPane pane;
+    @FXML private GridPane paneMyList;
+    @FXML private GridPane paneUsers;
+    @FXML private ScrollPane scrollPane;
+    @FXML private GridPane paneSerie;
+    @FXML private Pane userPane;
+    @FXML private Button btn;
+    @FXML private TabPane tab;
+    @FXML private AnchorPane root;
+    @FXML private TextField username;
+    @FXML private TextField age;
+    @FXML private TextField searchBar;
+    @FXML private Button changeButton;
+    @FXML private Button refreshButton;
+    @FXML private Button searchButton;
+    @FXML private ToolBar toolBar;
+    @FXML private Button changeUserButton;
 
     public Medie m;
     private static ArrayList<Medie> arr;
     private static String str;
     private static ArrayList<Medie> myList;
     private static ArrayList<Medie> searchList;
+    private static ArrayList<Medie> searchListMovie;
+    private static ArrayList<Medie> searchListSerie;
     private static ArrayList<ImageView> movieImages;
     private static ArrayList<ImageView> serieImages;
     //private static ArrayList<User> users;
@@ -225,54 +210,66 @@ public class FXController implements Initializable {
     }
 
     public void searchInput() throws FileNotFoundException {
-        searchList = new ArrayList<>();
+
+        searchListMovie = new ArrayList<>();
+        searchListSerie = new ArrayList<>();
         pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
         paneSerie.getChildren().removeAll(serieImages); //fjerner alle images fra gridpane
 
-        int x=0;
-        int y=3;
-
         for (Medie m : arr) {
-            if (m.getTitle().toLowerCase().contains(searchBar.getText().toLowerCase())) {
-                searchList.add(m);
-            }
-        }
-        if(searchList.size()<7){
-            y=0;
-        }
-        for (Medie m : searchList) {
             if (m instanceof Movie) {
-                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-
-                ImageView img = new ImageView(image);
-                img.setImage(image);
-                movieImages.add(img);
-
-                pane.add(img, x, y);
-                x++;
-                if (x == 10) {
-                    y++;
-                    x = 0;
+                if (m.getTitle().toLowerCase().contains(searchBar.getText().toLowerCase())) {
+                    searchListMovie.add(m);
                 }
             }
             if (m instanceof Serie) {
-                FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-
-                ImageView img = new ImageView(image);
-                img.setImage(image);
-                serieImages.add(img);
-                paneSerie.add(img, x, y);
-                x++;
-                //y++;
-                if (x == 10) {
-                    y++;
-                    x = 0;
+                if (m.getTitle().toLowerCase().contains(searchBar.getText().toLowerCase())) {
+                    searchListSerie.add(m);
                 }
             }
         }
+        int x = 0;
+        int y = 3;
+        if(searchListMovie.size()<20){
+            y=0;
+        }
+        for (Medie m : searchListMovie) {
+            FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
+            Image image = new Image(fl);
+            ImageView img = new ImageView(image);
+            img.setImage(image);
+            movieImages.add(img);
+            pane.add(img, x, y);
+            x++;
+            //y++;
+            if (x == 10) {
+                y++;
+                x = 0;
+            }
+            getInfo(img, m);
+        }
+        x = 0;
+        y = 3;
+        if(searchListSerie.size()<20){
+            y=0;
+        }
+        for (Medie m : searchListSerie) {
+            FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
+            Image image = new Image(fl);
+            ImageView img = new ImageView(image);
+            img.setImage(image);
+            serieImages.add(img);
+            paneSerie.add(img, x, y);
+            x++;
+            //y++;
+            if (x == 10) {
+                y++;
+                x = 0;
+            }
+            getInfo(img,m);
+        }
     }
+
 
     //pop-up window
     private void getInfo(ImageView imgTest,Medie m){
@@ -306,35 +303,41 @@ public class FXController implements Initializable {
         });
     }
     public void refreshSearch() throws FileNotFoundException {
+        pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
+        paneSerie.getChildren().removeAll(serieImages); //fjerner alle images fra gridpane
         initializeMovie();
         initializeSerie();
     }
 
     public void searchGenre(String input) throws FileNotFoundException {
-        searchList = new ArrayList<>();
+        searchListMovie = new ArrayList<>();
+        searchListSerie = new ArrayList<>();
         pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
         paneSerie.getChildren().removeAll(serieImages); //fjerner alle images fra gridpane
 
-        int x = 0;
-        int y = 3;
-
         for (Medie m : arr) {
-            if (m.getGenre().toLowerCase().contains(input.toLowerCase())) {
-                searchList.add(m);
+            if (m instanceof Movie) {
+                if (m.getGenre().toLowerCase().contains(input.toLowerCase())) {
+                    searchListMovie.add(m);
+                }
+            }
+            if (m instanceof Serie) {
+                if (m.getGenre().toLowerCase().contains(input.toLowerCase())) {
+                    searchListSerie.add(m);
+                }
             }
         }
-        if(searchList.size()<7){
+        int x = 0;
+        int y = 3;
+        if(searchListMovie.size()<20){
             y=0;
         }
-        for (Medie m : searchList) {
-            if (m instanceof Movie) {
+        for (Medie m : searchListMovie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
-
                 ImageView img = new ImageView(image);
                 img.setImage(image);
                 movieImages.add(img);
-
                 pane.add(img, x, y);
                 x++;
                 //y++;
@@ -342,11 +345,17 @@ public class FXController implements Initializable {
                     y++;
                     x = 0;
                 }
+                getInfo(img, m);
             }
-            if (m instanceof Serie) {
+
+        x = 0;
+        y = 3;
+        if(searchListSerie.size()<20){
+            y=0;
+        }
+        for (Medie m : searchListSerie) {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
-
                 ImageView img = new ImageView(image);
                 img.setImage(image);
                 serieImages.add(img);
@@ -357,9 +366,10 @@ public class FXController implements Initializable {
                     y++;
                     x = 0;
                 }
+                getInfo(img,m);
             }
         }
-    }
+
 
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
     @FXML private MenuItem adventureItem;

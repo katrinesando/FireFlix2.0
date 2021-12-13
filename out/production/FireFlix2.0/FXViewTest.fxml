@@ -179,7 +179,7 @@
                   <MenuItem fx:id="fantasyItem" mnemonicParsing="false" onAction="#searchFantasy" text="Fantasy" />
                   <MenuItem fx:id="filmNoirItem" mnemonicParsing="false" onAction="#searchFilmNoir" text="Film-Noir" />
                   <MenuItem fx:id="historyItem" mnemonicParsing="false" onAction="#searchHistory" text="History" />
-                  <MenuItem fx:id="horrorItem" mnemonicParsing="false" onAction="#searchHistory" text="Horror" />
+                  <MenuItem fx:id="horrorItem" mnemonicParsing="false" onAction="#searchHorror" text="Horror" />
                   <MenuItem fx:id="musicItem" mnemonicParsing="false" onAction="#searchMusic" text="Music" />
                   <MenuItem fx:id="musicalItem" mnemonicParsing="false" onAction="#searchMusical" text="Musical" />
                   <MenuItem fx:id="mysteryItem" mnemonicParsing="false" onAction="#searchMystery" text="Mystery" />

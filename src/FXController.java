@@ -5,7 +5,10 @@ import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.stage.Popup;
 
 import java.io.*;
 import java.net.URL;
@@ -42,7 +45,10 @@ public class FXController implements Initializable {
     private TextField searchMovieBar;
     @FXML
     private Button changeUserMovieButton;
-
+    @FXML
+    private Button searchMovieButton;
+    @FXML
+    private Button RefreshButton;
 
     @FXML
     private Button searchSerieButton;
@@ -99,18 +105,14 @@ public class FXController implements Initializable {
         int x = 0;//1 virker
         int y = 3;//3 virker
 
-        pane.addRow(10);
-        ColumnConstraints cc = new ColumnConstraints(100, 100, Double.MAX_VALUE,
-                Priority.ALWAYS, HPos.CENTER, true);
-        pane.getColumnConstraints().addAll(cc, cc);
-        pane.setHgrow(scrollPane, Priority.ALWAYS);
+        ImageView imgTest = new ImageView();
 
         for (Medie m : arr) {
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                ImageView imgTest = new ImageView(image);
+                imgTest = new ImageView(image);
                 imgTest.setImage(image);
 
                 pane.add(imgTest, x, y);
@@ -121,6 +123,7 @@ public class FXController implements Initializable {
                     x = 0;
                 }
             }
+            getInfo(imgTest,m);
         }
     }
 
@@ -129,27 +132,22 @@ public class FXController implements Initializable {
         int x = 0;
         int y = 3;
 
-        root.setLeftAnchor(paneSerie, 0.0);
-        root.setRightAnchor(paneSerie, 0.0);
-
+        ImageView imgTest = new ImageView();
         for (Medie m : arr) {
             if (m instanceof Serie) {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-                javafx.scene.image.Image image = new Image(fl);
+                Image image = new Image(fl);
 
-                javafx.scene.image.ImageView imgTest = new javafx.scene.image.ImageView(image);
+                imgTest = new ImageView(image);
                 imgTest.setImage(image);
                 paneSerie.add(imgTest, x, y);
                 x++;
-                //y++;
                 if (x == 10) {
                     y++;
                     x = 0;
                 }
-                //if(x==5&&y==7){
-                //    continue;
-                //}
             }
+            getInfo(imgTest,m);
         }
     }
 
@@ -274,11 +272,37 @@ public class FXController implements Initializable {
         }
     }
 
-    @FXML
-    private Button searchMovieButton;
-    @FXML
-    private Button RefreshButton;
+    //pop-up window
+    private void getInfo(ImageView imgTest,Medie m){
+        Font myFont = new Font("Serif", 16);
 
+        imgTest.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            System.out.println("Tile pressed "+m.getTitle() + " --- "+m.getRating());
+            // create a popup
+            Popup popup = new Popup();
+            Label lbl = new Label("Title: " +m.getTitle()
+                    +'\n'+"Year: "+m.getYear()
+                    +'\n'+"Genre: "+m.getGenre()
+                    +'\n'+"Rating: "+m.getRating());
+            lbl.setStyle(" -fx-background-color: white;");
+            // set size of label
+            lbl.setFont(myFont);
+            lbl.setMinWidth(70);
+            lbl.setMinHeight(100);
+
+            popup.getContent().add(lbl);
+            //popup.getContent().add(popUpPane);
+            //popUpPane.setVisible(true);
+            // set auto hide
+            popup.setAutoHide(true);
+            if (!popup.isShowing()){
+                System.out.println(scrollPane.getHeight());
+                System.out.println(scrollPane.getWidth());
+                popup.show(pane,(scrollPane.getHeight()),(scrollPane.getWidth()/3));
+            }
+            event.consume();
+        });
+    }
 }
 
 

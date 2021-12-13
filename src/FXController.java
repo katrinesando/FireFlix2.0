@@ -55,7 +55,8 @@ public class FXController implements Initializable {
     private static String str;
     private static ArrayList<Medie> myList;
     private static ArrayList<Medie> searchList;
-    private static ArrayList<ImageView> images;
+    private static ArrayList<ImageView> movieImages;
+    private static ArrayList<ImageView> SerieImages;
     //private static ArrayList<User> users;
 
     public void loadFileMovie() {
@@ -97,7 +98,7 @@ public class FXController implements Initializable {
         int y = 3;//3 virker
 
         ImageView img = new ImageView();
-        images = new ArrayList<>();
+        movieImages = new ArrayList<>();
         for (Medie m : arr) {
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
@@ -105,7 +106,7 @@ public class FXController implements Initializable {
 
                 img = new ImageView(image);
                 img.setImage(image);
-                images.add(img);
+                movieImages.add(img);
                 pane.add(img, x, y);
                 x++;
                 //y++;
@@ -124,6 +125,7 @@ public class FXController implements Initializable {
         int y = 3;
 
         ImageView img = new ImageView();
+        SerieImages = new ArrayList<>();
         for (Medie m : arr) {
             if (m instanceof Serie) {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
@@ -131,7 +133,7 @@ public class FXController implements Initializable {
 
                 img = new ImageView(image);
                 img.setImage(image);
-                images.add(img);
+                SerieImages.add(img);
                 paneSerie.add(img, x, y);
                 x++;
                 if (x == 10) {
@@ -225,7 +227,7 @@ public class FXController implements Initializable {
 
     public void searchInput() throws FileNotFoundException {
         searchList = new ArrayList<>();
-        pane.getChildren().removeAll(images);
+
         int x=0;
         int y=3;
 
@@ -242,7 +244,7 @@ public class FXController implements Initializable {
 
                 ImageView imgTest = new ImageView(image);
                 imgTest.setImage(image);
-
+                pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
                 pane.add(imgTest, x, y);
                 x++;
                 if (x == 10) {
@@ -256,7 +258,7 @@ public class FXController implements Initializable {
 
                 ImageView imgTest = new ImageView(image);
                 imgTest.setImage(image);
-
+                paneSerie.getChildren().removeAll(SerieImages); //fjerner alle images fra gridpane
                 paneSerie.add(imgTest, x, y);
                 x++;
                 //y++;
@@ -316,14 +318,13 @@ public class FXController implements Initializable {
             }
         }
         for (Medie m : searchList) {
-
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
                 ImageView imgTest = new ImageView(image);
                 imgTest.setImage(image);
-
+                pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
                 pane.add(imgTest, x, y);
                 x++;
                 //y++;
@@ -338,7 +339,7 @@ public class FXController implements Initializable {
 
                 ImageView imgTest = new ImageView(image);
                 imgTest.setImage(image);
-
+                paneSerie.getChildren().removeAll(SerieImages); //fjerner alle images fra gridpane
                 paneSerie.add(imgTest, x, y);
                 x++;
                 //y++;

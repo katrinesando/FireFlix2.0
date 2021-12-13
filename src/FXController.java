@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Popup;
 
 import java.io.*;
@@ -24,6 +25,9 @@ public class FXController implements Initializable {
     @FXML private TabPane tab;
     @FXML private AnchorPane root;
     @FXML private TextField username;
+    @FXML private Text noGenreError;
+    @FXML private Text noSearchMovieError;
+    @FXML private Text noSearchSerieError;
     @FXML private TextField age;
     @FXML private TextField searchBar;
     @FXML private Button changeButton;
@@ -199,6 +203,9 @@ public class FXController implements Initializable {
         loadFileSerie();
         //System.out.println(m.getTitle());
         try {
+            noGenreError.setVisible(false);
+            noSearchSerieError.setVisible(false);
+            noSearchMovieError.setVisible(false);
             toolBar.setVisible(false);
             initializeMovie();
             initializeSerie();
@@ -210,6 +217,9 @@ public class FXController implements Initializable {
     }
 
     public void searchInput() throws FileNotFoundException {
+        noGenreError.setVisible(false);
+        noSearchSerieError.setVisible(false);
+        noSearchMovieError.setVisible(false);
 
         searchListMovie = new ArrayList<>();
         searchListSerie = new ArrayList<>();
@@ -233,6 +243,11 @@ public class FXController implements Initializable {
         if(searchListMovie.size()<20){
             y=0;
         }
+
+        if(searchListMovie.isEmpty()){
+            noSearchMovieError.setVisible(true);
+        }
+
         for (Medie m : searchListMovie) {
             FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
             Image image = new Image(fl);
@@ -253,6 +268,10 @@ public class FXController implements Initializable {
         if(searchListSerie.size()<20){
             y=0;
         }
+        if(searchListSerie.isEmpty()){
+            noSearchSerieError.setVisible(true);
+        }
+
         for (Medie m : searchListSerie) {
             FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
             Image image = new Image(fl);
@@ -303,6 +322,9 @@ public class FXController implements Initializable {
         });
     }
     public void refreshSearch() throws FileNotFoundException {
+        noGenreError.setVisible(false);
+        noSearchSerieError.setVisible(false);
+        noSearchMovieError.setVisible(false);
         pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
         paneSerie.getChildren().removeAll(serieImages); //fjerner alle images fra gridpane
         initializeMovie();
@@ -310,6 +332,9 @@ public class FXController implements Initializable {
     }
 
     public void searchGenre(String input) throws FileNotFoundException {
+        noGenreError.setVisible(false);
+        noSearchSerieError.setVisible(false);
+        noSearchMovieError.setVisible(false);
         searchListMovie = new ArrayList<>();
         searchListSerie = new ArrayList<>();
         pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
@@ -348,11 +373,14 @@ public class FXController implements Initializable {
                 getInfo(img, m);
             }
 
-        x = 0;
-        y = 3;
+        x = 0; y = 3;
         if(searchListSerie.size()<20){
-            y=0;
+            y=0;}
+
+        if(searchListSerie.isEmpty()){
+            noGenreError.setVisible(true);
         }
+
         for (Medie m : searchListSerie) {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
@@ -370,6 +398,13 @@ public class FXController implements Initializable {
             }
         }
 
+    public void addMedie(Medie m){
+        if(!myList.contains(m)){
+            myList.add(m);}
+        else {
+            myList.remove(m);
+        }
+    }
 
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
     @FXML private MenuItem adventureItem;

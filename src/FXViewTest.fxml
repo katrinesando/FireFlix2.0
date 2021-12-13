@@ -49,6 +49,13 @@
                                  <padding>
                                     <Insets top="3.0" />
                                  </padding>
+                                 <children>
+                                    <Text fx:id="noSearchMovieError" strokeType="OUTSIDE" strokeWidth="0.0" text="Your search doesn't match any film" GridPane.columnIndex="3" GridPane.rowSpan="2">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
                     </GridPane>
                   </content>
                 </ScrollPane>
@@ -83,6 +90,18 @@
                                  <padding>
                                     <Insets top="3.0" />
                                  </padding>
+                                 <children>
+                                    <Text fx:id="noGenreError" strokeType="OUTSIDE" strokeWidth="0.0" text="There doesn't exist a serie in that genre" GridPane.columnIndex="3" GridPane.rowSpan="2">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="noSearchSerieError" strokeType="OUTSIDE" strokeWidth="0.0" text="Your search doesn't match any serie" GridPane.columnIndex="3" GridPane.rowSpan="2">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
                     </GridPane>
                   </content>
                 </ScrollPane>

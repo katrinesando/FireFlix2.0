@@ -12,17 +12,7 @@ public class User {
         myList= new ArrayList<>();
     }
 
-    public void addMedie(Medie m) throws MedieAlreadyAddedException{
-        if(!myList.contains(m)){
-            myList.add(m);}
-        else {
-            if(m instanceof Movie a) {
-                throw new MedieAlreadyAddedException(a.getTitle() +" has already been added to your list");
-            } else if (m instanceof Serie b){
-                throw new MedieAlreadyAddedException(b.getTitle() +" has already been added to your list");
-            }
-        }
-    }
+
     public void removeMedie(Medie m){
         myList.remove(m);
     }

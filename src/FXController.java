@@ -164,23 +164,23 @@ public class FXController implements Initializable {
         int x = 0;//1 virker
         int y = 0;//3 virker
         //tilføjer en masse tilfældeige medier til MyList
-        myList.add(arr.get(1));
-        myList.add(arr.get(14));
-        myList.add(arr.get(27));
-        myList.add(arr.get(40));
-        myList.add(arr.get(102));
-        myList.add(arr.get(150));
-        myList.add(arr.get(170));
+//        myList.add(arr.get(1));
+//        myList.add(arr.get(14));
+//        myList.add(arr.get(27));
+//        myList.add(arr.get(40));
+//        myList.add(arr.get(102));
+//        myList.add(arr.get(150));
+//        myList.add(arr.get(170));
 
         for (Medie m : myList) {
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
-                ImageView imgTest = new ImageView(image);
-                imgTest.setImage(image);
-
-                paneMyList.add(imgTest, x, y);
+                ImageView img = new ImageView(image);
+                img.setImage(image);
+                movieImages.add(img);
+                paneMyList.add(img, x, y);
                 x++;
                 //y++;
                 if (x == 10) {
@@ -192,11 +192,11 @@ public class FXController implements Initializable {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
                 javafx.scene.image.Image image = new Image(fl);
 
-                javafx.scene.image.ImageView imgTest = new javafx.scene.image.ImageView(image);
-                imgTest.setImage(image);
-                paneMyList.add(imgTest, x, y);
+                javafx.scene.image.ImageView img = new javafx.scene.image.ImageView(image);
+                img.setImage(image);
+                serieImages.add(img);
+                paneMyList.add(img, x, y);
                 x++;
-                //y++;
                 if (x == 10) {
                     y++;
                     x = 0;
@@ -308,6 +308,7 @@ public class FXController implements Initializable {
             System.out.println("Tile pressed "+m.getTitle() + " --- "+m.getRating());
             // create a popup
             Popup popup = new Popup();
+            Button add = new Button("Add to List");
             Label lbl = new Label("Title: " +m.getTitle()
                     +'\n'+"Year: "+m.getYear()
                     +'\n'+"Genre: "+m.getGenre()
@@ -319,8 +320,15 @@ public class FXController implements Initializable {
             lbl.setMinHeight(100);
 
             popup.getContent().add(lbl);
-            //popup.getContent().add(popUpPane);
-            //popUpPane.setVisible(true);
+            popup.getContent().add(add);
+            add.relocate(0,100);
+            //tilføjer event handler til button
+            add.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
+                System.out.println("Button pressed");
+                myList.add(m);
+                btnPressed.consume();
+            });
+
             // set auto hide
             popup.setAutoHide(true);
             if (!popup.isShowing()){
@@ -337,8 +345,11 @@ public class FXController implements Initializable {
         noSearchMovieError.setVisible(false);
         pane.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
         paneSerie.getChildren().removeAll(serieImages); //fjerner alle images fra gridpane
+        paneMyList.getChildren().removeAll(movieImages); //fjerner alle images fra gridpane
+        paneMyList.getChildren().removeAll(serieImages); //fjerner alle images fra gridpane
         initializeMovie();
         initializeSerie();
+        initializeMyList();
     }
 
     public void searchGenre(String input) throws FileNotFoundException {

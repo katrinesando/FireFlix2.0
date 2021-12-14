@@ -1,4 +1,7 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -10,15 +13,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 
-import javax.sound.midi.Soundbank;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class FXController implements Initializable {
     @FXML private GridPane pane,paneMyList,paneUsers,paneSerie,paneNewUser;
     @FXML private ScrollPane scrollPane;
+    @FXML private Pane popUpPane;
     @FXML private Pane userPane;
     @FXML private TabPane tab;
     @FXML private AnchorPane root;
@@ -26,9 +30,8 @@ public class FXController implements Initializable {
     @FXML private Text noGenreError,noSearchMovieError,noSearchSerieError,EmptyMyListError;
     @FXML private Button changeButton,refreshButton,searchButton,changeUserButton,btn;
     @FXML private ToolBar toolBar;
-    @FXML private MenuItem actionItem,adventureItem,biographyItem,crimeItem,comedyItem,dramaItem,familyItem,fantasyItem,filmNoirItem,historyItem,
+    @FXML private MenuItem adventureItem,biographyItem,crimeItem,comedyItem,dramaItem,familyItem,fantasyItem,filmNoirItem,historyItem,
             horrorItem,musicalItem,musicItem,mysteryItem,romanceItem,sciFiItem,sportItem,thrillerItem,warItem,westernItem;
-
 
     public Medie m;
     private static ArrayList<Medie> arr;
@@ -42,6 +45,8 @@ public class FXController implements Initializable {
     private User user;
     private FileManagement filemangement;
     //private static ArrayList<User> users;
+
+
 
     @FXML
     private void initializeMovie() throws FileNotFoundException {
@@ -99,48 +104,48 @@ public class FXController implements Initializable {
     @FXML
     private void userBtn() throws FileNotFoundException {
         //tjekker om username er empty
-        //users=new ArrayList<>();
         if(username.getText().isEmpty()){
             alert.setContentText("Username can't be empty");
-            alert.setAlertType(Alert.AlertType.WARNING);
-            alert.show();
-            //tjekker om age er empty
-        }else if(age.getText().isEmpty()){
-            alert.setContentText("Age field can't be empty");
             alert.setAlertType(Alert.AlertType.WARNING);
             alert.show();
         }else{
             //tilføjer user
             if(userAmount<4){
                 user = new User(username.getText(),age.getText());
-                Button newUser = new Button();
-                paneNewUser.add(new Button(user.getName()),x,0);
+                Button newUser = new Button(user.getName());
+
+                newUser.setOnAction((ActionEvent e) -> {
+                    System.out.println("Pressed Hey");
+                });
+                paneNewUser.add(newUser,x,0);
                 newUsersBtn.add(newUser);
+
+
                 newUser.setVisible(false);
                 x++;userAmount++;
             }else{//hvis der er flere end 4 user
-                alert.setContentText("You can't have more than four users");
+                alert.setContentText("4 users is the max to be added");
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.show();
             }
-            if(!alert.isShowing()){ //går kun videre, hvis alert ikke er vist
+            if(!alert.isShowing()){ //går kun videre, hvis alert ikke er vidst
                 userPane.setVisible(false);
                 tab.setVisible(true);
                 toolBar.setVisible(true);
             }
         }
+
     }
-    
     @FXML
     private void changeUser() throws FileNotFoundException {
-        for(Button b : newUsersBtn){
-            b.setVisible(true);
-        }
         tab.setVisible(false);
         userPane.setVisible(true);
         toolBar.setVisible(false);
-    }
+        for(Button b : newUsersBtn){
+            b.setVisible(true);
+        }
 
+    }
 
     private void initializeMyList() throws FileNotFoundException {
 
@@ -168,9 +173,9 @@ public class FXController implements Initializable {
             }
             if (m instanceof Serie) {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
+                javafx.scene.image.Image image = new Image(fl);
 
-                ImageView img = new ImageView(image);
+                javafx.scene.image.ImageView img = new javafx.scene.image.ImageView(image);
                 img.setImage(image);
                 images.add(img);
                 paneMyList.add(img, x, y);
@@ -285,7 +290,6 @@ public class FXController implements Initializable {
         }
     }
 
-
     //pop-up window
     private void getInfo(ImageView imgTest,Medie m){
         Font myFont = new Font("Serie", 16);
@@ -296,20 +300,23 @@ public class FXController implements Initializable {
             Popup popup = new Popup();
             Button add = new Button("Add to List");
             Button remove = new Button("Delete from List");
+            Label background = new Label();
+            background.setMinSize(300,200);
             Label lbl = new Label("Title: " +m.getTitle()
                     +'\n'+"Year: "+m.getYear()
                     +'\n'+"Genre: "+m.getGenre()
                     +'\n'+"Rating: "+m.getRating()
                     +'\n'+"  ");
-            lbl.setStyle(" -fx-background-color: white;");
+            background.setStyle(" -fx-background-color: white;");
             // set size of label
             lbl.setFont(myFont);
-            lbl.setMinWidth(70);
-            lbl.setMinHeight(100);
 
+            popup.getContent().add(background);
             popup.getContent().add(lbl);
             popup.getContent().add(add);
             popup.getContent().add(remove);
+
+            lbl.relocate(10,10);
             add.relocate(0,100);
             remove.relocate(80,100);
             //tilføjer event handler til button
@@ -451,7 +458,7 @@ public class FXController implements Initializable {
         initializeMyList();
     }
 
-    public void searchAction() throws FileNotFoundException {searchGenre( "Action");}
+
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
     public void searchBiography() throws FileNotFoundException {searchGenre( "Biography");}
     public void searchCrime() throws FileNotFoundException {searchGenre( "Crime");}

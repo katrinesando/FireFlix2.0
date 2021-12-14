@@ -21,7 +21,7 @@ public class FXController implements Initializable {
     @FXML private TabPane tab;
     @FXML private AnchorPane root;
     @FXML private TextField username,age,searchBar;
-    @FXML private Text noGenreError,noSearchMovieError,noSearchSerieError;
+    @FXML private Text noGenreError,noSearchMovieError,noSearchSerieError,EmptyMyListError;
     @FXML private Button changeButton,refreshButton,searchButton,changeUserButton,btn;
     @FXML private ToolBar toolBar;
     @FXML private MenuItem adventureItem,biographyItem,crimeItem,comedyItem,dramaItem,familyItem,fantasyItem,filmNoirItem,historyItem,
@@ -180,6 +180,9 @@ public class FXController implements Initializable {
                 getInfo(img,m);
 
             }
+        }
+        if(myList.isEmpty()){
+            EmptyMyListError.setVisible(true);
         }
 
     }
@@ -413,11 +416,28 @@ public class FXController implements Initializable {
         if(!myList.contains(m)){
             myList.add(m);}
         else {
-            myList.remove(m);
+            alert.setContentText("This medie is already on your list");
+            alert.setAlertType(Alert.AlertType.WARNING);
+            alert.show();
         }
         paneMyList.getChildren().removeAll(images);
+        EmptyMyListError.setVisible(false);
         initializeMyList();
     }
+
+    public void removeMedie(Medie m) throws FileNotFoundException {
+        if(myList.contains(m)){
+            myList.remove(m);}
+        else {
+            alert.setContentText("This medie isn't on your list");
+            alert.setAlertType(Alert.AlertType.WARNING);
+            alert.show();
+        }
+        paneMyList.getChildren().removeAll(images);
+        EmptyMyListError.setVisible(false);
+        initializeMyList();
+    }
+
 
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
     public void searchBiography() throws FileNotFoundException {searchGenre( "Biography");}

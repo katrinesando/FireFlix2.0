@@ -153,6 +153,7 @@ public class FXController implements Initializable {
                     y++;
                     x = 0;
                 }
+                getInfo(img,m);
             }
             if (m instanceof Serie) {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
@@ -167,8 +168,11 @@ public class FXController implements Initializable {
                     y++;
                     x = 0;
                 }
+                getInfo(img,m);
+
             }
         }
+
     }
 
     @Override
@@ -296,7 +300,11 @@ public class FXController implements Initializable {
             add.relocate(0,100);
             //tilføjer event handler til button
             add.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
-                addMedie(m);
+                try {
+                    addMedie(m);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 //                myList.add(m);
                 btnPressed.consume();
             });
@@ -391,12 +399,14 @@ public class FXController implements Initializable {
             }
         }
 
-    public void addMedie(Medie m){
+    public void addMedie(Medie m) throws FileNotFoundException {
         if(!myList.contains(m)){
             myList.add(m);}
         else {
             myList.remove(m);
         }
+        paneMyList.getChildren().removeAll(images);
+        initializeMyList();
     }
 
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}

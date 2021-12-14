@@ -12,7 +12,7 @@ public class FileManagement {
     private static Medie medie;
 
     //loader filer for Movie og Serie
-    private static void loadFile() {
+    public ArrayList<Medie> loadFile() {
         arr = new ArrayList<>();
         try{
             //læser txt for film med BufferedReader og gemmer i Array
@@ -34,16 +34,13 @@ public class FileManagement {
         }catch (IOException e){
             e.printStackTrace();
         }
-    }
-    public ArrayList<Medie> getArr(){
-        loadFile();
         return arr;
     }
 
     //kobler alle film til poster og gemmer i array
     private static void poster(){
         poster = new ArrayList<>();
-        loadFile();
+        //loadFile();
         for(Medie m : arr){
             poster.add(m.getImage(m.getTitle()));
         }

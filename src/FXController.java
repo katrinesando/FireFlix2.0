@@ -144,15 +144,9 @@ public class FXController implements Initializable {
 
         int x = 0;//1 virker
         int y = 0;//3 virker
-        //tilføjer en masse tilfældeige medier til MyList
-//        myList.add(arr.get(1));
-//        myList.add(arr.get(14));
-//        myList.add(arr.get(27));
-//        myList.add(arr.get(40));
-//        myList.add(arr.get(102));
-//        myList.add(arr.get(150));
-//        myList.add(arr.get(170));
-
+        if(myList.isEmpty()){
+            EmptyMyListError.setVisible(true);
+        }
         for (Medie m : myList) {
             if (m instanceof Movie) {
                 FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
@@ -184,12 +178,9 @@ public class FXController implements Initializable {
                     x = 0;
                 }
                 getInfo(img,m);
-
             }
         }
-        if(myList.isEmpty()){
-            EmptyMyListError.setVisible(true);
-        }
+
 
     }
 
@@ -302,6 +293,7 @@ public class FXController implements Initializable {
             // create a popup
             Popup popup = new Popup();
             Button add = new Button("Add to List");
+            Button remove = new Button("Delete from List");
             Label lbl = new Label("Title: " +m.getTitle()
                     +'\n'+"Year: "+m.getYear()
                     +'\n'+"Genre: "+m.getGenre()
@@ -315,18 +307,11 @@ public class FXController implements Initializable {
 
             popup.getContent().add(lbl);
             popup.getContent().add(add);
+            popup.getContent().add(remove);
             add.relocate(0,100);
+            remove.relocate(80,100);
             //tilføjer event handler til button
-            add.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
-                try {
-                    addMedie(m);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-//                myList.add(m);
-                btnPressed.consume();
-            });
-
+            btnMyList(add,remove,m);
             // set auto hide
             popup.setAutoHide(true);
             if (!popup.isShowing()){
@@ -336,6 +321,26 @@ public class FXController implements Initializable {
                 popup.show(paneMyList,(scrollPane.getHeight()),(scrollPane.getWidth()/3));
             }
             event.consume();
+        });
+    }
+    private void btnMyList(Button add, Button remove,Medie m){
+        //tilføjer event handler til button
+        add.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
+            try {
+                addMedie(m);
+                System.out.println(m.getTitle());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            btnPressed.consume();
+        });
+        remove.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
+            try {
+                removeMedie(m);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            btnPressed.consume();
         });
     }
     public void refreshSearch() throws FileNotFoundException {

@@ -313,10 +313,14 @@ public class FXController implements Initializable {
             Button add = new Button("Add to List");
             Button remove = new Button("Delete from List");
             Button play = new Button("Play");
+
             btnMyList(add,remove,play,m);
+
             alert.setAlertType(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(m.getTitle());
             GridPane gridPop = new GridPane();
-            gridPop.addRow(0,play,new Label(m.getTitle()));
+            gridPop.addRow(0,new Label(" Year: " + m.getYear()));
+            gridPop.addRow(1,add,remove,play);
             alert.getDialogPane().setContent(gridPop);
 
             alert.showAndWait();

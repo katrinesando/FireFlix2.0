@@ -136,6 +136,13 @@
                                  <padding>
                                     <Insets top="3.0" />
                                  </padding>
+                                 <children>
+                                    <Text fx:id="EmptyMyListError" strokeType="OUTSIDE" strokeWidth="0.0" text="You haven't added any film og serie to your list yet :(" GridPane.columnIndex="3" GridPane.rowSpan="2">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
                               </GridPane>
                            </content>
                         </ScrollPane>

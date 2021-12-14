@@ -296,8 +296,8 @@ public class FXController implements Initializable {
             add.relocate(0,100);
             //tilføjer event handler til button
             add.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
-                System.out.println("Button pressed");
-                myList.add(m);
+                addMedie(m);
+//                myList.add(m);
                 btnPressed.consume();
             });
 

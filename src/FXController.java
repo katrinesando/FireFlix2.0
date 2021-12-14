@@ -24,8 +24,9 @@ public class FXController implements Initializable {
     @FXML private Text noGenreError,noSearchMovieError,noSearchSerieError,EmptyMyListError;
     @FXML private Button changeButton,refreshButton,searchButton,changeUserButton,btn;
     @FXML private ToolBar toolBar;
-    @FXML private MenuItem adventureItem,biographyItem,crimeItem,comedyItem,dramaItem,familyItem,fantasyItem,filmNoirItem,historyItem,
+    @FXML private MenuItem actionItem,adventureItem,biographyItem,crimeItem,comedyItem,dramaItem,familyItem,fantasyItem,filmNoirItem,historyItem,
             horrorItem,musicalItem,musicItem,mysteryItem,romanceItem,sciFiItem,sportItem,thrillerItem,warItem,westernItem;
+
 
     public Medie m;
     private static ArrayList<Medie> arr;
@@ -102,6 +103,10 @@ public class FXController implements Initializable {
             alert.setContentText("Username can't be empty");
             alert.setAlertType(Alert.AlertType.WARNING);
             alert.show();
+        //}else if(username.getText().equals(paneNewUser)) {
+        //    alert.setContentText("There already exist a user with this username");
+        //    alert.setAlertType(Alert.AlertType.WARNING);
+        //    alert.show();
         }else{
             //tilføjer user
             if(userAmount<4){
@@ -438,7 +443,7 @@ public class FXController implements Initializable {
         initializeMyList();
     }
 
-
+    public void searchAction() throws FileNotFoundException {searchGenre( "Action");}
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
     public void searchBiography() throws FileNotFoundException {searchGenre( "Biography");}
     public void searchCrime() throws FileNotFoundException {searchGenre( "Crime");}

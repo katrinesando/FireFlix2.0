@@ -1,3 +1,4 @@
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -9,6 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 
+import javax.sound.midi.Soundbank;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,8 +42,6 @@ public class FXController implements Initializable {
     private User user;
     private FileManagement filemangement;
     //private static ArrayList<User> users;
-
-
 
     @FXML
     private void initializeMovie() throws FileNotFoundException {
@@ -99,13 +99,14 @@ public class FXController implements Initializable {
     @FXML
     private void userBtn() throws FileNotFoundException {
         //tjekker om username er empty
+        //users=new ArrayList<>();
         if(username.getText().isEmpty()){
             alert.setContentText("Username can't be empty");
             alert.setAlertType(Alert.AlertType.WARNING);
             alert.show();
-        //tjekker om der allerrede eksistere en bruger med det navn
-        }else if(username.getText().equals(newUsersBtn.toString())) {
-            alert.setContentText("There already exist a user with this username");
+            //tjekker om age er empty
+        }else if(age.getText().isEmpty()){
+            alert.setContentText("Age field can't be empty");
             alert.setAlertType(Alert.AlertType.WARNING);
             alert.show();
         }else{
@@ -118,6 +119,7 @@ public class FXController implements Initializable {
                 newUser.setVisible(false);
                 x++;userAmount++;
             }else{//hvis der er flere end 4 user
+                alert.setContentText("You can't have more than four users");
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.show();
             }
@@ -128,7 +130,7 @@ public class FXController implements Initializable {
             }
         }
     }
-
+    
     @FXML
     private void changeUser() throws FileNotFoundException {
         for(Button b : newUsersBtn){
@@ -166,9 +168,9 @@ public class FXController implements Initializable {
             }
             if (m instanceof Serie) {
                 FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-                javafx.scene.image.Image image = new Image(fl);
+                Image image = new Image(fl);
 
-                javafx.scene.image.ImageView img = new javafx.scene.image.ImageView(image);
+                ImageView img = new ImageView(image);
                 img.setImage(image);
                 images.add(img);
                 paneMyList.add(img, x, y);

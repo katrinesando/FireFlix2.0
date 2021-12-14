@@ -1,3 +1,7 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -12,11 +16,13 @@ import javafx.stage.Popup;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class FXController implements Initializable {
     @FXML private GridPane pane,paneMyList,paneUsers,paneSerie,paneNewUser;
     @FXML private ScrollPane scrollPane;
+    @FXML private Pane popUpPane;
     @FXML private Pane userPane;
     @FXML private TabPane tab;
     @FXML private AnchorPane root;
@@ -106,12 +112,19 @@ public class FXController implements Initializable {
             //tilføjer user
             if(userAmount<4){
                 user = new User(username.getText(),age.getText());
-                Button newUser = new Button();
-                paneNewUser.add(new Button(user.getName()),x,0);
+                Button newUser = new Button(user.getName());
+
+                newUser.setOnAction((ActionEvent e) -> {
+                    System.out.println("Pressed Hey");
+                });
+                paneNewUser.add(newUser,x,0);
                 newUsersBtn.add(newUser);
+
+
                 newUser.setVisible(false);
                 x++;userAmount++;
             }else{//hvis der er flere end 4 user
+                alert.setContentText("4 users is the max to be added");
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.show();
             }
@@ -121,18 +134,18 @@ public class FXController implements Initializable {
                 toolBar.setVisible(true);
             }
         }
-    }
 
+    }
     @FXML
     private void changeUser() throws FileNotFoundException {
-        for(Button b : newUsersBtn){
-            b.setVisible(true);
-        }
         tab.setVisible(false);
         userPane.setVisible(true);
         toolBar.setVisible(false);
-    }
+        for(Button b : newUsersBtn){
+            b.setVisible(true);
+        }
 
+    }
 
     private void initializeMyList() throws FileNotFoundException {
 
@@ -277,7 +290,6 @@ public class FXController implements Initializable {
         }
     }
 
-
     //pop-up window
     private void getInfo(ImageView imgTest,Medie m){
         Font myFont = new Font("Serie", 16);
@@ -288,20 +300,23 @@ public class FXController implements Initializable {
             Popup popup = new Popup();
             Button add = new Button("Add to List");
             Button remove = new Button("Delete from List");
+            Label background = new Label();
+            background.setMinSize(300,200);
             Label lbl = new Label("Title: " +m.getTitle()
                     +'\n'+"Year: "+m.getYear()
                     +'\n'+"Genre: "+m.getGenre()
                     +'\n'+"Rating: "+m.getRating()
                     +'\n'+"  ");
-            lbl.setStyle(" -fx-background-color: white;");
+            background.setStyle(" -fx-background-color: white;");
             // set size of label
             lbl.setFont(myFont);
-            lbl.setMinWidth(70);
-            lbl.setMinHeight(100);
 
+            popup.getContent().add(background);
             popup.getContent().add(lbl);
             popup.getContent().add(add);
             popup.getContent().add(remove);
+
+            lbl.relocate(10,10);
             add.relocate(0,100);
             remove.relocate(80,100);
             //tilføjer event handler til button

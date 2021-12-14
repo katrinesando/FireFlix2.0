@@ -103,10 +103,11 @@ public class FXController implements Initializable {
             alert.setContentText("Username can't be empty");
             alert.setAlertType(Alert.AlertType.WARNING);
             alert.show();
-        //}else if(username.getText().equals(paneNewUser)) {
-        //    alert.setContentText("There already exist a user with this username");
-        //    alert.setAlertType(Alert.AlertType.WARNING);
-        //    alert.show();
+        //tjekker om der allerrede eksistere en bruger med det navn
+        }else if(username.getText().equals(newUsersBtn.toString())) {
+            alert.setContentText("There already exist a user with this username");
+            alert.setAlertType(Alert.AlertType.WARNING);
+            alert.show();
         }else{
             //tilføjer user
             if(userAmount<4){
@@ -120,7 +121,7 @@ public class FXController implements Initializable {
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.show();
             }
-            if(!alert.isShowing()){ //går kun videre, hvis alert ikke er vidst
+            if(!alert.isShowing()){ //går kun videre, hvis alert ikke er vist
                 userPane.setVisible(false);
                 tab.setVisible(true);
                 toolBar.setVisible(true);

@@ -33,6 +33,8 @@ public class FXController implements Initializable {
     @FXML private MenuItem adventureItem,biographyItem,crimeItem,comedyItem,dramaItem,familyItem,fantasyItem,filmNoirItem,historyItem,
             horrorItem,musicalItem,musicItem,mysteryItem,romanceItem,sciFiItem,sportItem,thrillerItem,warItem,westernItem;
 
+    @FXML private MenuItem actionItem;
+
     public Medie m;
     private static ArrayList<Medie> arr;
     private static String str;
@@ -43,8 +45,8 @@ public class FXController implements Initializable {
     private static ArrayList<Button> newUsersBtn;
     public Alert alert;
     private User user;
-    private FileManagement filemangement;
-    //private static ArrayList<User> users;
+    private FileManagement filemanagement;
+    private static ArrayList<User> users;
 
 
 
@@ -103,24 +105,38 @@ public class FXController implements Initializable {
 
     @FXML
     private void userBtn() throws FileNotFoundException {
+        users = new ArrayList<>();
         //tjekker om username er empty
         if(username.getText().isEmpty()){
             alert.setContentText("Username can't be empty");
             alert.setAlertType(Alert.AlertType.WARNING);
             alert.show();
+        }else if(age.getText().isEmpty()){
+            alert.setContentText("Age field can't be empty");
+            alert.setAlertType(Alert.AlertType.WARNING);
+            alert.show();
         }else{
             //tilføjer user
             if(userAmount<4){
+                /*for(User u:users){
+                    if(username.getText().toLowerCase().equals(u.getName())){
+                        alert.setContentText("There already exists a user with that username");
+                        alert.setAlertType(Alert.AlertType.WARNING);
+                        alert.show();
+                    }
+                }*/
                 user = new User(username.getText(),age.getText());
+                users.add(user);
                 Button newUser = new Button(user.getName());
-
                 newUser.setOnAction((ActionEvent e) -> {
-                    System.out.println("Pressed Hey");
+                    if(!alert.isShowing()){ //går kun videre, hvis alert ikke er vidst
+                        userPane.setVisible(false);
+                        tab.setVisible(true);
+                        toolBar.setVisible(true);
+                    }
                 });
                 paneNewUser.add(newUser,x,0);
                 newUsersBtn.add(newUser);
-
-
                 newUser.setVisible(false);
                 x++;userAmount++;
             }else{//hvis der er flere end 4 user
@@ -144,7 +160,6 @@ public class FXController implements Initializable {
         for(Button b : newUsersBtn){
             b.setVisible(true);
         }
-
     }
 
     private void initializeMyList() throws FileNotFoundException {
@@ -199,8 +214,8 @@ public class FXController implements Initializable {
         images = new ArrayList<>();
         newUsersBtn = new ArrayList<>();
         alert = new Alert(Alert.AlertType.NONE);
-        filemangement = new FileManagement();
-        arr = filemangement.loadFile();
+        filemanagement = new FileManagement();
+        arr = filemanagement.loadFile();
 
         //System.out.println(m.getTitle());
         try {
@@ -458,7 +473,7 @@ public class FXController implements Initializable {
         initializeMyList();
     }
 
-
+    public void searchAction() throws FileNotFoundException {searchGenre( "Action");}
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
     public void searchBiography() throws FileNotFoundException {searchGenre( "Biography");}
     public void searchCrime() throws FileNotFoundException {searchGenre( "Crime");}

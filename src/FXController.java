@@ -305,49 +305,69 @@ public class FXController implements Initializable {
         }
     }
 
-    //pop-up window
+    //pop up window med alert
     private void getInfo(ImageView imgTest,Medie m){
         Font myFont = new Font("Serie", 16);
 
         imgTest.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            System.out.println("Tile pressed "+m.getTitle() + " --- "+m.getRating());
-            // create a popup
-            Popup popup = new Popup();
             Button add = new Button("Add to List");
             Button remove = new Button("Delete from List");
-            Label background = new Label();
-            background.setMinSize(300,200);
-            Label lbl = new Label("Title: " +m.getTitle()
-                    +'\n'+"Year: "+m.getYear()
-                    +'\n'+"Genre: "+m.getGenre()
-                    +'\n'+"Rating: "+m.getRating()
-                    +'\n'+"  ");
-            background.setStyle(" -fx-background-color: white;");
-            // set size of label
-            lbl.setFont(myFont);
+            Button play = new Button("Play");
+            btnMyList(add,remove,play,m);
+            alert.setAlertType(Alert.AlertType.CONFIRMATION);
+            GridPane gridPop = new GridPane();
+            gridPop.addRow(0,play,new Label(m.getTitle()));
+            alert.getDialogPane().setContent(gridPop);
 
-            popup.getContent().add(background);
-            popup.getContent().add(lbl);
-            popup.getContent().add(add);
-            popup.getContent().add(remove);
+            alert.showAndWait();
 
-            lbl.relocate(10,10);
-            add.relocate(0,100);
-            remove.relocate(80,100);
-            //tilføjer event handler til button
-            btnMyList(add,remove,m);
-            // set auto hide
-            popup.setAutoHide(true);
-            if (!popup.isShowing()){
-                System.out.println(scrollPane.getHeight());
-                System.out.println(scrollPane.getWidth());
-//                popup.show();
-                popup.show(paneMyList,(scrollPane.getHeight()),(scrollPane.getWidth()/3));
-            }
             event.consume();
         });
     }
-    private void btnMyList(Button add, Button remove,Medie m){
+
+    //pop-up window
+//    private void getInfo(ImageView imgTest,Medie m){
+//        Font myFont = new Font("Serie", 16);
+//
+//        imgTest.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+//            System.out.println("Tile pressed "+m.getTitle() + " --- "+m.getRating());
+//            // create a popup
+//            Popup popup = new Popup();
+//            Button add = new Button("Add to List");
+//            Button remove = new Button("Delete from List");
+//            Label background = new Label();
+//            background.setMinSize(300,200);
+//            Label lbl = new Label("Title: " +m.getTitle()
+//                    +'\n'+"Year: "+m.getYear()
+//                    +'\n'+"Genre: "+m.getGenre()
+//                    +'\n'+"Rating: "+m.getRating()
+//                    +'\n'+"  ");
+//            background.setStyle(" -fx-background-color: white;");
+//            // set size of label
+//            lbl.setFont(myFont);
+//
+//            popup.getContent().add(background);
+//            popup.getContent().add(lbl);
+//            popup.getContent().add(add);
+//            popup.getContent().add(remove);
+//
+//            lbl.relocate(10,10);
+//            add.relocate(0,100);
+//            remove.relocate(80,100);
+//            //tilføjer event handler til button
+//            btnMyList(add,remove,m);
+//            // set auto hide
+//            popup.setAutoHide(true);
+//            if (!popup.isShowing()){
+//                System.out.println(scrollPane.getHeight());
+//                System.out.println(scrollPane.getWidth());
+////                popup.show();
+//                popup.show(paneMyList,(scrollPane.getHeight()),(scrollPane.getWidth()/3));
+//            }
+//            event.consume();
+//        });
+//    }
+    private void btnMyList(Button add, Button remove,Button play,Medie m){
         //tilføjer event handler til button
         add.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
             try {
@@ -363,6 +383,26 @@ public class FXController implements Initializable {
                 removeMedie(m);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }
+            btnPressed.consume();
+        });
+        play.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
+            Popup popup = new Popup();
+            FileInputStream fl = null;
+            try {
+                fl = new FileInputStream("src/GreatClaus.jpg");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Image image = new Image(fl);
+
+            ImageView img = new ImageView(image);
+            img.setImage(image);
+            popup.getContent().add(img);
+            if (!popup.isShowing()){
+                System.out.println(scrollPane.getHeight());
+                System.out.println(scrollPane.getWidth());
+                popup.show(paneMyList,(scrollPane.getHeight()),(scrollPane.getWidth()/3));
             }
             btnPressed.consume();
         });

@@ -203,6 +203,7 @@
             <TextField disable="true" editable="false" prefHeight="30.0" prefWidth="625.0" />
             <MenuButton mnemonicParsing="false" text="Genre">
               <items>
+                  <MenuItem fx:id="actionItem" mnemonicParsing="false" onAction="#searchAction" text="Action" />
                 <MenuItem fx:id="adventureItem" mnemonicParsing="false" onAction="#searchAdventure" text="Adventure" />
                 <MenuItem fx:id="biographyItem" mnemonicParsing="false" onAction="#searchBiography" text="Biography" />
                   <MenuItem fx:id="crimeItem" mnemonicParsing="false" onAction="#searchCrime" text="Crime" />

@@ -40,6 +40,8 @@ public class FXController implements Initializable {
     private FileManagement filemangement;
     //private static ArrayList<User> users;
 
+
+
     @FXML
     private void initializeMovie() throws FileNotFoundException {
         int x = 0;//1 virker
@@ -95,22 +97,29 @@ public class FXController implements Initializable {
 
     @FXML
     private void userBtn() throws FileNotFoundException {
-        //tilføjer user
-        if(userAmount<4){
-            user = new User(username.getText(),age.getText());
-            Button newUser = new Button();
-            paneNewUser.add(new Button(user.getName()),x,0);
-            newUsersBtn.add(newUser);
-            newUser.setVisible(false);
-            x++;userAmount++;
-        }else{//hvis der er flere end 4 user
-            alert.setAlertType(Alert.AlertType.ERROR);
+        //tjekker om username er empty
+        if(username.getText().isEmpty()){
+            alert.setContentText("Username can't be empty");
+            alert.setAlertType(Alert.AlertType.WARNING);
             alert.show();
-        }
-        if(!alert.isShowing()){ //går kun videre, hvis alert ikke er vidst
-            userPane.setVisible(false);
-            tab.setVisible(true);
-            toolBar.setVisible(true);
+        }else{
+            //tilføjer user
+            if(userAmount<4){
+                user = new User(username.getText(),age.getText());
+                Button newUser = new Button();
+                paneNewUser.add(new Button(user.getName()),x,0);
+                newUsersBtn.add(newUser);
+                newUser.setVisible(false);
+                x++;userAmount++;
+            }else{//hvis der er flere end 4 user
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.show();
+            }
+            if(!alert.isShowing()){ //går kun videre, hvis alert ikke er vidst
+                userPane.setVisible(false);
+                tab.setVisible(true);
+                toolBar.setVisible(true);
+            }
         }
     }
 
@@ -306,7 +315,8 @@ public class FXController implements Initializable {
             if (!popup.isShowing()){
                 System.out.println(scrollPane.getHeight());
                 System.out.println(scrollPane.getWidth());
-                popup.show(pane,(scrollPane.getHeight()),(scrollPane.getWidth()/3));
+//                popup.show();
+                popup.show(paneMyList,(scrollPane.getHeight()),(scrollPane.getWidth()/3));
             }
             event.consume();
         });
@@ -318,7 +328,7 @@ public class FXController implements Initializable {
         pane.getChildren().removeAll(images); //fjerner alle images fra gridpane
         paneSerie.getChildren().removeAll(images); //fjerner alle images fra gridpane
         paneMyList.getChildren().removeAll(images); //fjerner alle images fra gridpane
-        paneMyList.getChildren().removeAll(images); //fjerner alle images fra gridpane
+
         initializeMovie();
         initializeSerie();
         initializeMyList();

@@ -296,7 +296,6 @@ public class FXController implements Initializable {
             images.add(img);
             paneSerie.add(img, x, y);
             x++;
-            //y++;
             if (x == 10) {
                 y++;
                 x = 0;
@@ -319,11 +318,12 @@ public class FXController implements Initializable {
             alert.setAlertType(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(m.getTitle());
             GridPane gridPop = new GridPane();
-            gridPop.addRow(0,new Label(" Year: " + m.getYear()));
-            gridPop.addRow(1,add,remove,play);
+            gridPop.addRow(0,new Label(" Genre: " + m.getGenre()));
+            gridPop.addRow(1,new Label(" Year: " + m.getYear()),new Label("Rating: " + m.getRating()));
+            gridPop.addRow(2,play,add,remove);
             alert.getDialogPane().setContent(gridPop);
 
-            alert.showAndWait();
+            alert.show();
 
             event.consume();
         });
@@ -402,11 +402,15 @@ public class FXController implements Initializable {
 
             ImageView img = new ImageView(image);
             img.setImage(image);
+            img.preserveRatioProperty();
+            img.setPreserveRatio(true);
+            img.setFitHeight(500);
             popup.getContent().add(img);
+            popup.setAutoHide(true);
             if (!popup.isShowing()){
                 System.out.println(scrollPane.getHeight());
                 System.out.println(scrollPane.getWidth());
-                popup.show(paneMyList,(scrollPane.getHeight()),(scrollPane.getWidth()/3));
+                popup.show(root,(scrollPane.getHeight()),(scrollPane.getWidth()));
             }
             btnPressed.consume();
         });

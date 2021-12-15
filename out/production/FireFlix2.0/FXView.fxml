@@ -50,7 +50,7 @@
                                     <Insets top="3.0" />
                                  </padding>
                                  <children>
-                                    <Text fx:id="noSearchMovieError" strokeType="OUTSIDE" strokeWidth="0.0" text="Your search doesn't match any film" GridPane.columnIndex="3" GridPane.rowSpan="2">
+                                    <Text fx:id="noSearchMovieError" strokeType="OUTSIDE" strokeWidth="0.0" text="Your search doesn't match any film" visible="false" GridPane.columnIndex="3" GridPane.rowSpan="2">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -91,12 +91,12 @@
                                     <Insets top="3.0" />
                                  </padding>
                                  <children>
-                                    <Text fx:id="noGenreError" strokeType="OUTSIDE" strokeWidth="0.0" text="There doesn't exist a serie in that genre" GridPane.columnIndex="3" GridPane.rowSpan="2">
+                                    <Text fx:id="noGenreError" strokeType="OUTSIDE" strokeWidth="0.0" text="There doesn't exist a serie in that genre" visible="false" GridPane.columnIndex="3" GridPane.rowSpan="2">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="noSearchSerieError" strokeType="OUTSIDE" strokeWidth="0.0" text="Your search doesn't match any serie" GridPane.columnIndex="3" GridPane.rowSpan="2">
+                                    <Text fx:id="noSearchSerieError" strokeType="OUTSIDE" strokeWidth="0.0" text="Your search doesn't match any serie" visible="false" GridPane.columnIndex="3" GridPane.rowSpan="2">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -185,7 +185,7 @@
             </GridPane>
          </children>
       </Pane>
-      <ToolBar fx:id="toolBar" layoutY="32.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="54.0" prefWidth="1281.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <ToolBar fx:id="toolBar" layoutY="32.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="54.0" prefWidth="1281.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <items>
             <Text boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" text="FireFlix  ">
                <font>

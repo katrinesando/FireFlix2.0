@@ -48,6 +48,7 @@ public class FXController implements Initializable {
     private FileManagement filemanagement;
     private static ArrayList<User> users;
 
+
     @FXML
     private void initializeMovie() throws FileNotFoundException {
         int x = 0;//1 virker
@@ -57,9 +58,9 @@ public class FXController implements Initializable {
 
         for (Medie m : arr) {
             if (m instanceof Movie) {
-                FileInputStream fl = new FileInputStream("Materials/filmplakater/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-
+                //FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
+                //Image image = new Image(fl);
+                Image image = new Image(getClass().getResourceAsStream("/filmplakater/" + m.getTitle() + ".jpg"));
                 img = new ImageView(image);
                 img.setImage(image);
                 images.add(img);
@@ -84,9 +85,9 @@ public class FXController implements Initializable {
 
         for (Medie m : arr) {
             if (m instanceof Serie) {
-                FileInputStream fl = new FileInputStream("Materials/serieforsider/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-
+//                FileInputStream fl = new FileInputStream("Materials/serieforsider/" + m.getTitle() + ".jpg");
+//                Image image = new Image(fl);
+                Image image = new Image(getClass().getResourceAsStream("/serieforsider/" + m.getTitle() + ".jpg"));
                 img = new ImageView(image);
                 img.setImage(image);
                 images.add(img);
@@ -169,8 +170,9 @@ public class FXController implements Initializable {
         }
         for (Medie m : myList) {
             if (m instanceof Movie) {
-                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
+//                FileInputStream fl = new FileInputStream("Materials/filmplakater/" + m.getTitle() + ".jpg");
+//                Image image = new Image(fl);
+                Image image = new Image(getClass().getResourceAsStream("/filmplakater/" + m.getTitle() + ".jpg"));
 
                 ImageView img = new ImageView(image);
                 img.setImage(image);
@@ -185,9 +187,9 @@ public class FXController implements Initializable {
                 getInfo(img,m);
             }
             if (m instanceof Serie) {
-                FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-                javafx.scene.image.Image image = new Image(fl);
-
+//                FileInputStream fl = new FileInputStream("Materials/serieforsider/" + m.getTitle() + ".jpg");
+//                javafx.scene.image.Image image = new Image(fl);
+                Image image = new Image(getClass().getResourceAsStream("/serieforsider/" + m.getTitle() + ".jpg"));
                 javafx.scene.image.ImageView img = new javafx.scene.image.ImageView(image);
                 img.setImage(image);
                 images.add(img);
@@ -264,8 +266,9 @@ public class FXController implements Initializable {
         }
 
         for (Medie m : searchListMovie) {
-            FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
-            Image image = new Image(fl);
+//            FileInputStream fl = new FileInputStream("Materials/filmplakater/" + m.getTitle() + ".jpg");
+//            Image image = new Image(fl);
+            Image image = new Image(getClass().getResourceAsStream("/filmplakater/" + m.getTitle() + ".jpg"));
             ImageView img = new ImageView(image);
             img.setImage(image);
             images.add(img);
@@ -288,8 +291,9 @@ public class FXController implements Initializable {
         }
 
         for (Medie m : searchListSerie) {
-            FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-            Image image = new Image(fl);
+//            FileInputStream fl = new FileInputStream("Materials/serieforsider/" + m.getTitle() + ".jpg");
+//            Image image = new Image(fl);
+            Image image = new Image(getClass().getResourceAsStream("/serieforsider/" + m.getTitle() + ".jpg"));
             ImageView img = new ImageView(image);
             img.setImage(image);
             images.add(img);
@@ -393,7 +397,7 @@ public class FXController implements Initializable {
             Popup popup = new Popup();
             FileInputStream fl = null;
             try {
-                fl = new FileInputStream("src/GreatClaus.jpg");
+                fl = new FileInputStream("Materials/GreatClaus.jpg");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -454,9 +458,11 @@ public class FXController implements Initializable {
             y=0;
         }
         for (Medie m : searchListMovie) {
-                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-                ImageView img = new ImageView(image);
+//                FileInputStream fl = new FileInputStream("Materials/filmplakater/" + m.getTitle() + ".jpg");
+//                Image image = new Image(fl);
+            Image image = new Image(getClass().getResourceAsStream("/filmplakater/" + m.getTitle() + ".jpg"));
+
+            ImageView img = new ImageView(image);
                 img.setImage(image);
                 images.add(img);
                 pane.add(img, x, y);
@@ -478,9 +484,11 @@ public class FXController implements Initializable {
         }
 
         for (Medie m : searchListSerie) {
-                FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-                ImageView img = new ImageView(image);
+//                FileInputStream fl = new FileInputStream("Materials/serieforsider/" + m.getTitle() + ".jpg");
+//                Image image = new Image(fl);
+            Image image = new Image(getClass().getResourceAsStream("/serieforsider/" + m.getTitle() + ".jpg"));
+
+            ImageView img = new ImageView(image);
                 img.setImage(image);
                 images.add(img);
                 paneSerie.add(img, x, y);

@@ -43,12 +43,10 @@ public class FXController implements Initializable {
     private static ArrayList<ImageView> images;
     private int userAmount = 0,x=0;
     private static ArrayList<Button> newUsersBtn;
-    public Alert alert;
+    public Alert alert,popup;
     private User user;
     private FileManagement filemanagement;
     private static ArrayList<User> users;
-
-
 
     @FXML
     private void initializeMovie() throws FileNotFoundException {
@@ -59,7 +57,7 @@ public class FXController implements Initializable {
 
         for (Medie m : arr) {
             if (m instanceof Movie) {
-                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
+                FileInputStream fl = new FileInputStream("Materials/filmplakater/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
                 img = new ImageView(image);
@@ -86,7 +84,7 @@ public class FXController implements Initializable {
 
         for (Medie m : arr) {
             if (m instanceof Serie) {
-                FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
+                FileInputStream fl = new FileInputStream("Materials/serieforsider/" + m.getTitle() + ".jpg");
                 Image image = new Image(fl);
 
                 img = new ImageView(image);
@@ -214,6 +212,7 @@ public class FXController implements Initializable {
         images = new ArrayList<>();
         newUsersBtn = new ArrayList<>();
         alert = new Alert(Alert.AlertType.NONE);
+        popup = new Alert(Alert.AlertType.NONE);
         filemanagement = new FileManagement();
         arr = filemanagement.loadFile();
 
@@ -315,15 +314,15 @@ public class FXController implements Initializable {
 
             btnMyList(add,remove,play,m);
 
-            alert.setAlertType(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(m.getTitle());
+            popup.setAlertType(Alert.AlertType.CONFIRMATION);
+            popup.setHeaderText(m.getTitle());
             GridPane gridPop = new GridPane();
             gridPop.addRow(0,new Label(" Genre: " + m.getGenre()));
             gridPop.addRow(1,new Label(" Year: " + m.getYear()),new Label("Rating: " + m.getRating()));
             gridPop.addRow(2,play,add,remove);
-            alert.getDialogPane().setContent(gridPop);
+            popup.getDialogPane().setContent(gridPop);
 
-            alert.show();
+            popup.show();
 
             event.consume();
         });
@@ -521,6 +520,7 @@ public class FXController implements Initializable {
         initializeMyList();
     }
 
+   //menu
     public void searchAction() throws FileNotFoundException {searchGenre( "Action");}
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
     public void searchBiography() throws FileNotFoundException {searchGenre( "Biography");}

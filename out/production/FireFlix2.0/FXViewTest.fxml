@@ -2,10 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -113,7 +113,7 @@
                <content>
                   <AnchorPane fx:id="rootMyList" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ScrollPane fx:id="scrollMyList" pannable="true" prefHeight="771.2" prefWidth="1280.0">
+                        <ScrollPane fx:id="scrollMyList" pannable="true" prefHeight="771.2" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
                               <GridPane fx:id="paneMyList" hgap="30.0" prefHeight="762.0" prefWidth="1472.0" vgap="10.0">
                                  <columnConstraints>
@@ -154,25 +154,25 @@
     </TabPane>
       <Pane fx:id="userPane" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="btn" alignment="CENTER" layoutX="567.0" layoutY="393.0" mnemonicParsing="false" onAction="#userBtn" prefHeight="112.0" prefWidth="146.0" text="Create User" />
-            <Text layoutX="557.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FireFlix">
+            <Button fx:id="btn" alignment="CENTER" layoutX="569.0" layoutY="361.0" mnemonicParsing="false" onAction="#userBtn" prefHeight="112.0" prefWidth="146.0" text="Create User" />
+            <Text layoutX="559.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FireFlix">
                <font>
                   <Font name="System Bold" size="56.0" />
                </font>
             </Text>
-            <TextField fx:id="username" layoutX="613.0" layoutY="292.0" />
-            <TextField fx:id="age" layoutX="613.0" layoutY="339.0" />
-            <Text layoutX="521.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:">
+            <TextField fx:id="username" layoutX="615.0" layoutY="260.0" />
+            <TextField fx:id="age" layoutX="615.0" layoutY="307.0" />
+            <Text layoutX="523.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="521.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:">
+            <Text layoutX="523.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <GridPane fx:id="paneNewUser" layoutX="217.0" layoutY="582.0" prefHeight="147.0" prefWidth="878.0">
+            <GridPane fx:id="paneNewUser" alignment="CENTER" layoutX="280.0" layoutY="501.0" prefHeight="147.0" prefWidth="878.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -183,24 +183,16 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Pane fx:id="popUpPane" layoutX="540.0" layoutY="293.0" prefHeight="200.0" prefWidth="200.0" visible="false">
-               <children>
-                  <Button layoutX="22.0" layoutY="116.0" mnemonicParsing="false" text="Add" visible="false" />
-                  <Button layoutX="122.0" layoutY="116.0" mnemonicParsing="false" text="Remove" visible="false" />
-                  <Label fx:id="lblInfo" layoutX="34.0" layoutY="32.0" text="Label" visible="false" />
-                  <Button layoutX="70.0" layoutY="148.0" mnemonicParsing="false" text="Play" visible="false" />
-               </children>
-            </Pane>
          </children>
       </Pane>
-      <ToolBar fx:id="toolBar" layoutY="32.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="53.0" prefWidth="1279.0">
+      <ToolBar fx:id="toolBar" layoutY="32.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="54.0" prefWidth="1281.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <items>
             <Text boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" text="FireFlix  ">
                <font>
                   <Font name="System Bold" size="56.0" />
                </font>
             </Text>
-            <TextField disable="true" editable="false" prefHeight="30.0" prefWidth="625.0" />
+            <Separator prefHeight="30.0" prefWidth="625.0" />
             <MenuButton mnemonicParsing="false" text="Genre">
               <items>
                   <MenuItem fx:id="actionItem" mnemonicParsing="false" onAction="#searchAction" text="Action" />

@@ -29,15 +29,12 @@ public class FXController implements Initializable {
 
     public Medie m;
     private static ArrayList<Medie> arr;
-    private static String str;
     private static ArrayList<Medie> myList,searchListMovie,searchListSerie;
-    private static ArrayList<Medie> searchList;
     private static ArrayList<ImageView> images;
     private int userAmount = 0,x=0;
     private static ArrayList<Button> newUsersBtn;
     public Alert alert;
     public Alert alertWarning;
-    private Alert popupAlert    ;
     private User user;
     private FileManagement filemanagement;
     private static ArrayList<User> users;
@@ -105,7 +102,7 @@ public class FXController implements Initializable {
     private void userBtn() {
         users = new ArrayList<>();
         //tjekker om username er empty
-        System.out.println(userAlert().booleanValue());
+        //System.out.println(userAlert().booleanValue());
         if(userAlert()){
             userAlert();
         }else{
@@ -113,11 +110,11 @@ public class FXController implements Initializable {
             if(userAmount<4){
             //tjekker om der allerrede eksistere en user med det brugernavn
                 for(Button b : newUsersBtn){
-                    if(username.getText().toLowerCase().equals(b.getText().toLowerCase())){
-                        alert.setContentText("There already exists a user with that username"
+                    if(username.getText().equalsIgnoreCase(b.getText())){
+                        alertWarning.setContentText("There already exists a user with that username"
                                 +'\n'+"Please pick another username");
-                        alert.setAlertType(Alert.AlertType.WARNING);
-                        alert.show();
+                        alertWarning.setAlertType(Alert.AlertType.WARNING);
+                        alertWarning.show();
                         return;
                     }
                 }
@@ -153,7 +150,7 @@ public class FXController implements Initializable {
     private Boolean userAlert(){
        if(username.getText().isEmpty()){
            alert.setContentText("Username can't be empty"
-                   +'\n'+"Please pick ausername");
+                   +'\n'+"Please pick a username");
            alert.setAlertType(Alert.AlertType.WARNING);
            alert.show();
            return true;
@@ -255,7 +252,7 @@ public class FXController implements Initializable {
         noSearchMovieError.setVisible(false);
     }
 
-    public void searchInput() throws FileNotFoundException {
+    public void searchInput() {
         errorMes();
 
         pane.getChildren().removeAll(images); //fjerner alle images fra gridpane
@@ -372,7 +369,7 @@ public class FXController implements Initializable {
         initializeMyList();
     }
 
-    public void searchGenre(String input) throws FileNotFoundException {
+    public void searchGenre(String input) {
         errorMes();
 
         searchListMovie = new ArrayList<>();
@@ -400,7 +397,7 @@ public class FXController implements Initializable {
         search(x, y, noGenreError,searchListMovie,searchListSerie);
     }
 
-    private void search(int x, int y, Text noGenreError,ArrayList<Medie> searchListMovie,ArrayList<Medie> searchListSerie) throws FileNotFoundException {
+    private void search(int x, int y, Text noGenreError,ArrayList<Medie> searchListMovie,ArrayList<Medie> searchListSerie) {
         for (Medie m : searchListMovie) {
                 ImageView img = movie(m);
                 pane.add(img, x, y);
@@ -441,13 +438,11 @@ public class FXController implements Initializable {
         else {
             if(m instanceof Movie) {
                 alertWarning.setContentText("This movie is already on your list");
-                alertWarning.setAlertType(Alert.AlertType.WARNING);
-                alertWarning.show();
             } else {
                 alertWarning.setContentText("This serie is already on your list");
-                alertWarning.setAlertType(Alert.AlertType.WARNING);
-                alertWarning.show();
             }
+            alertWarning.setAlertType(Alert.AlertType.WARNING);
+            alertWarning.show();
         }
         paneMyList.getChildren().removeAll(images);
         EmptyMyListError.setVisible(false);
@@ -460,39 +455,37 @@ public class FXController implements Initializable {
         else {
             if(m instanceof Movie) {
                 alertWarning.setContentText("This movie isn't on your list");
-                alertWarning.setAlertType(Alert.AlertType.WARNING);
-                alertWarning.show();
             } else {
                 alertWarning.setContentText("This serie isn't on your list");
-                alertWarning.setAlertType(Alert.AlertType.WARNING);
-                alertWarning.show();
             }
+            alertWarning.setAlertType(Alert.AlertType.WARNING);
+            alertWarning.show();
         }
         paneMyList.getChildren().removeAll(images);
         EmptyMyListError.setVisible(false);
         initializeMyList();
     }
 
-    public void searchAction() throws FileNotFoundException {searchGenre( "Action");}
-    public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
-    public void searchBiography() throws FileNotFoundException {searchGenre( "Biography");}
-    public void searchCrime() throws FileNotFoundException {searchGenre( "Crime");}
-    public void searchComedy() throws FileNotFoundException {searchGenre( "Comedy");}
-    public void searchDrama() throws FileNotFoundException {searchGenre( "Drama");}
-    public void searchFamily() throws FileNotFoundException {searchGenre( "Family");}
-    public void searchFantasy() throws FileNotFoundException {searchGenre( "Fantasy");}
-    public void searchFilmNoir() throws FileNotFoundException {searchGenre( "Film-Noir");}
-    public void searchHistory() throws FileNotFoundException {searchGenre( "History");}
-    public void searchHorror() throws FileNotFoundException {searchGenre( "Horror");}
-    public void searchMusical() throws FileNotFoundException {searchGenre( "Musical");}
-    public void searchMusic() throws FileNotFoundException {searchGenre( "Music");}
-    public void searchMystery() throws FileNotFoundException {searchGenre( "Mystery");}
-    public void searchRomance() throws FileNotFoundException {searchGenre( "Romance");}
-    public void searchSciFi() throws FileNotFoundException {searchGenre( "Sci-fi");}
-    public void searchSport() throws FileNotFoundException {searchGenre( "Sport");}
-    public void searchThriller() throws FileNotFoundException {searchGenre( "Thriller");}
-    public void searchWar() throws FileNotFoundException {searchGenre( "War");}
-    public void searchWestern() throws FileNotFoundException {searchGenre( "Western");}
+    public void searchAction() {searchGenre( "Action");}
+    public void searchAdventure() {searchGenre( "Adventure");}
+    public void searchBiography() {searchGenre( "Biography");}
+    public void searchCrime() {searchGenre( "Crime");}
+    public void searchComedy() {searchGenre( "Comedy");}
+    public void searchDrama() {searchGenre( "Drama");}
+    public void searchFamily() {searchGenre( "Family");}
+    public void searchFantasy() {searchGenre( "Fantasy");}
+    public void searchFilmNoir() {searchGenre( "Film-Noir");}
+    public void searchHistory() {searchGenre( "History");}
+    public void searchHorror() {searchGenre( "Horror");}
+    public void searchMusical() {searchGenre( "Musical");}
+    public void searchMusic() {searchGenre( "Music");}
+    public void searchMystery() {searchGenre( "Mystery");}
+    public void searchRomance() {searchGenre( "Romance");}
+    public void searchSciFi() {searchGenre( "Sci-fi");}
+    public void searchSport() {searchGenre( "Sport");}
+    public void searchThriller() {searchGenre( "Thriller");}
+    public void searchWar() {searchGenre( "War");}
+    public void searchWestern() {searchGenre( "Western");}
 
     // metode for at tjekke om en string er et tal: https://stackabuse.com/java-check-if-string-is-a-number/
     public static boolean isNumeric(String string) {

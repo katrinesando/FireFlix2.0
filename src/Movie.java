@@ -15,10 +15,9 @@ public class Movie extends Medie{
         try
         {
             // Grab the InputStream for the image and save in img
-            File file = new File("src\\filmplakater\\" + title+".jpg");
-            BufferedImage img = ImageIO.read(file);
+            File file = new File("src/filmplakater/" + title+".jpg");
             //java.awt.Desktop.getDesktop().open(file);
-            return img;
+            return ImageIO.read(file);
 
         } catch (IOException e) {
             System.out.println("The serie image was not loaded for: "+title);

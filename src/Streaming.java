@@ -7,6 +7,6 @@ import java.util.ArrayList;
 public class Streaming {
 
     public static void main(String[] args) {
-
+            FXTest.main(args);
     }
 }

@@ -1,7 +1,4 @@
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -17,24 +14,18 @@ import javafx.stage.Popup;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class FXController implements Initializable {
-    @FXML private GridPane pane,paneMyList,paneUsers,paneSerie,paneNewUser;
+    @FXML private GridPane pane,paneMyList,paneSerie,paneNewUser;
     @FXML private ScrollPane scrollPane;
-    @FXML private Pane popUpPane;
     @FXML private Pane userPane;
     @FXML private TabPane tab;
     @FXML private AnchorPane root;
     @FXML private TextField username,age,searchBar;
     @FXML private Text noGenreError,noSearchMovieError,noSearchSerieError,EmptyMyListError;
-    @FXML private Button changeButton,refreshButton,searchButton,changeUserButton,btn;
     @FXML private ToolBar toolBar;
-    @FXML private MenuItem adventureItem,biographyItem,crimeItem,comedyItem,dramaItem,familyItem,fantasyItem,filmNoirItem,historyItem,
-            horrorItem,musicalItem,musicItem,mysteryItem,romanceItem,sciFiItem,sportItem,thrillerItem,warItem,westernItem;
 
-    @FXML private MenuItem actionItem;
 
     public Medie m;
     private static ArrayList<Medie> arr;
@@ -51,6 +42,22 @@ public class FXController implements Initializable {
     private static ArrayList<User> users;
 
 
+    private ImageView movie(Medie m){
+        Image image = new Image(getClass().getResourceAsStream("/filmplakater/" + m.getTitle() + ".jpg"));
+
+        ImageView img = new ImageView(image);
+        img.setImage(image);
+        images.add(img);
+        return img;
+    }
+    private ImageView serie(Medie m){
+        Image image = new Image(getClass().getResourceAsStream("/serieforsider/" + m.getTitle() + ".jpg"));
+
+        ImageView img = new ImageView(image);
+        img.setImage(image);
+        images.add(img);
+        return img;
+    }
 
     @FXML
     private void initializeMovie() throws FileNotFoundException {
@@ -61,15 +68,9 @@ public class FXController implements Initializable {
 
         for (Medie m : arr) {
             if (m instanceof Movie) {
-                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-
-                img = new ImageView(image);
-                img.setImage(image);
-                images.add(img);
+                img = movie(m);
                 pane.add(img, x, y);
                 x++;
-                //y++;
                 if (x == 10) {
                     y++;
                     x = 0;
@@ -88,12 +89,7 @@ public class FXController implements Initializable {
 
         for (Medie m : arr) {
             if (m instanceof Serie) {
-                FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-
-                img = new ImageView(image);
-                img.setImage(image);
-                images.add(img);
+                img = serie(m);
                 paneSerie.add(img, x, y);
                 x++;
                 if (x == 10) {
@@ -106,32 +102,11 @@ public class FXController implements Initializable {
     }
 
     @FXML
-    private void userBtn() throws FileNotFoundException {
+    private void userBtn() {
         users = new ArrayList<>();
         //tjekker om username er empty
-        if(username.getText().isEmpty()){
-            alert.setContentText("Username can't be empty"
-                    +'\n'+"Please pick ausername");
-            alert.setAlertType(Alert.AlertType.WARNING);
-            alert.show();
-        //tjekker om age er empty
-        }else if(age.getText().isEmpty()){
-            alert.setContentText("Age field can't be empty"
-                    +'\n'+"Please fill out your age");
-            alert.setAlertType(Alert.AlertType.WARNING);
-            alert.show();
-        //tjekker om age er et tal - isNumeric metoden er nederst i dokumentet
-        }else if(!isNumeric((age.getText()))){
-            alert.setContentText("Age has to be a number"
-                    +'\n'+"Please enter a valid number");
-            alert.setAlertType(Alert.AlertType.WARNING);
-            alert.show();
-        //tjekker om age er et positivt tal
-        }else if(age.getText().contains("-")||age.getText().equals("0")){
-            alert.setContentText("Age has to be a positive number"
-                    +'\n'+"Please enter a valid number");
-            alert.setAlertType(Alert.AlertType.WARNING);
-            alert.show();
+        if(userAlert()){
+            userAlert();
         }else{
             //tilføjer user
             if(userAmount<4){
@@ -173,8 +148,40 @@ public class FXController implements Initializable {
         }
 
     }
+
+   private Boolean userAlert(){
+       if(username.getText().isEmpty()){
+           alert.setContentText("Username can't be empty"
+                   +'\n'+"Please pick ausername");
+           alert.setAlertType(Alert.AlertType.WARNING);
+           alert.show();
+           return true;
+           //tjekker om age er empty
+       }else if(age.getText().isEmpty()){
+           alert.setContentText("Age field can't be empty"
+                   +'\n'+"Please fill out your age");
+           alert.setAlertType(Alert.AlertType.WARNING);
+           alert.show();
+           return true;
+           //tjekker om age er et tal - isNumeric metoden er nederst i dokumentet
+       }else if(!isNumeric((age.getText()))){
+           alert.setContentText("Age has to be a number"
+                   +'\n'+"Please enter a valid number");
+           alert.setAlertType(Alert.AlertType.WARNING);
+           alert.show();
+           return true;
+           //tjekker om age er et positivt tal
+       }else if(age.getText().contains("-")||age.getText().equals("0")) {
+           alert.setContentText("Age has to be a positive number"
+                   + '\n' + "Please enter a valid number");
+           alert.setAlertType(Alert.AlertType.WARNING);
+           alert.show();
+           return true;
+       }
+       return false;
+   }
     @FXML
-    private void changeUser() throws FileNotFoundException {
+    private void changeUser() {
         tab.setVisible(false);
         userPane.setVisible(true);
         toolBar.setVisible(false);
@@ -185,23 +192,18 @@ public class FXController implements Initializable {
     }
 
     private void initializeMyList() throws FileNotFoundException {
+        int x = 0;
+        int y = 0;
+        ImageView img = new ImageView();
 
-        int x = 0;//1 virker
-        int y = 0;//3 virker
         if(myList.isEmpty()){
             EmptyMyListError.setVisible(true);
         }
         for (Medie m : myList) {
             if (m instanceof Movie) {
-                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-
-                ImageView img = new ImageView(image);
-                img.setImage(image);
-                images.add(img);
+                img = movie(m);
                 paneMyList.add(img, x, y);
                 x++;
-                //y++;
                 if (x == 10) {
                     y++;
                     x = 0;
@@ -209,12 +211,7 @@ public class FXController implements Initializable {
                 getInfo(img,m);
             }
             if (m instanceof Serie) {
-                FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-                javafx.scene.image.Image image = new Image(fl);
-
-                javafx.scene.image.ImageView img = new javafx.scene.image.ImageView(image);
-                img.setImage(image);
-                images.add(img);
+                img = serie(m);
                 paneMyList.add(img, x, y);
                 x++;
                 if (x == 10) {
@@ -231,37 +228,35 @@ public class FXController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //initialisere felter
-        arr = new ArrayList<Medie>();
-        myList = new ArrayList<Medie>();
+        arr = new ArrayList<>();
+        myList = new ArrayList<>();
         images = new ArrayList<>();
         newUsersBtn = new ArrayList<>();
+        searchListMovie = new ArrayList<>();
+        searchListSerie = new ArrayList<>();
+
         alert = new Alert(Alert.AlertType.NONE);
         alertWarning = new Alert(Alert.AlertType.NONE);
         filemanagement = new FileManagement();
         arr = filemanagement.loadFile();
 
-        //System.out.println(m.getTitle());
         try {
-            noGenreError.setVisible(false);
-            noSearchSerieError.setVisible(false);
-            noSearchMovieError.setVisible(false);
-            toolBar.setVisible(false);
             initializeMovie();
             initializeSerie();
             initializeMyList();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        //clipChildren(pane);
     }
-
-    public void searchInput() throws FileNotFoundException {
+    private void errorMes(){
         noGenreError.setVisible(false);
         noSearchSerieError.setVisible(false);
         noSearchMovieError.setVisible(false);
+    }
 
-        searchListMovie = new ArrayList<>();
-        searchListSerie = new ArrayList<>();
+    public void searchInput() throws FileNotFoundException {
+        errorMes();
+
         pane.getChildren().removeAll(images); //fjerner alle images fra gridpane
         paneSerie.getChildren().removeAll(images); //fjerner alle images fra gridpane
 
@@ -287,51 +282,14 @@ public class FXController implements Initializable {
             noSearchMovieError.setVisible(true);
         }
 
-        for (Medie m : searchListMovie) {
-            FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
-            Image image = new Image(fl);
-            ImageView img = new ImageView(image);
-            img.setImage(image);
-            images.add(img);
-            pane.add(img, x, y);
-            x++;
-            //y++;
-            if (x == 10) {
-                y++;
-                x = 0;
-            }
-            getInfo(img, m);
-        }
-        x = 0;
-        y = 3;
-        if(searchListSerie.size()<20){
-            y=0;
-        }
-        if(searchListSerie.isEmpty()){
-            noSearchSerieError.setVisible(true);
-        }
-
-        for (Medie m : searchListSerie) {
-            FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-            Image image = new Image(fl);
-            ImageView img = new ImageView(image);
-            img.setImage(image);
-            images.add(img);
-            paneSerie.add(img, x, y);
-            x++;
-            if (x == 10) {
-                y++;
-                x = 0;
-            }
-            getInfo(img,m);
-        }
+        search(x, y, noSearchSerieError,searchListMovie,searchListSerie);
     }
 
     //pop up window med alert
-    private void getInfo(ImageView imgTest,Medie m){
+    private void getInfo(ImageView img, Medie m){
         Font myFont = new Font("Serie", 16);
 
-        imgTest.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        img.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             Button add = new Button("Add to List");
             Button remove = new Button("Delete from List");
             Button play = new Button("Play");
@@ -356,48 +314,7 @@ public class FXController implements Initializable {
         });
     }
 
-    //pop-up window
-//    private void getInfo(ImageView imgTest,Medie m){
-//        Font myFont = new Font("Serie", 16);
-//
-//        imgTest.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//            System.out.println("Tile pressed "+m.getTitle() + " --- "+m.getRating());
-//            // create a popup
-//            Popup popup = new Popup();
-//            Button add = new Button("Add to List");
-//            Button remove = new Button("Delete from List");
-//            Label background = new Label();
-//            background.setMinSize(300,200);
-//            Label lbl = new Label("Title: " +m.getTitle()
-//                    +'\n'+"Year: "+m.getYear()
-//                    +'\n'+"Genre: "+m.getGenre()
-//                    +'\n'+"Rating: "+m.getRating()
-//                    +'\n'+"  ");
-//            background.setStyle(" -fx-background-color: white;");
-//            // set size of label
-//            lbl.setFont(myFont);
-//
-//            popup.getContent().add(background);
-//            popup.getContent().add(lbl);
-//            popup.getContent().add(add);
-//            popup.getContent().add(remove);
-//
-//            lbl.relocate(10,10);
-//            add.relocate(0,100);
-//            remove.relocate(80,100);
-//            //tilføjer event handler til button
-//            btnMyList(add,remove,m);
-//            // set auto hide
-//            popup.setAutoHide(true);
-//            if (!popup.isShowing()){
-//                System.out.println(scrollPane.getHeight());
-//                System.out.println(scrollPane.getWidth());
-////                popup.show();
-//                popup.show(paneMyList,(scrollPane.getHeight()),(scrollPane.getWidth()/3));
-//            }
-//            event.consume();
-//        });
-//    }
+
     private void btnMyList(Button add, Button remove,Button play,Medie m){
         //tilføjer event handler til button
         add.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
@@ -443,9 +360,7 @@ public class FXController implements Initializable {
         });
     }
     public void refreshSearch() throws FileNotFoundException {
-        noGenreError.setVisible(false);
-        noSearchSerieError.setVisible(false);
-        noSearchMovieError.setVisible(false);
+        errorMes();
         pane.getChildren().removeAll(images); //fjerner alle images fra gridpane
         paneSerie.getChildren().removeAll(images); //fjerner alle images fra gridpane
         paneMyList.getChildren().removeAll(images); //fjerner alle images fra gridpane
@@ -456,9 +371,8 @@ public class FXController implements Initializable {
     }
 
     public void searchGenre(String input) throws FileNotFoundException {
-        noGenreError.setVisible(false);
-        noSearchSerieError.setVisible(false);
-        noSearchMovieError.setVisible(false);
+        errorMes();
+
         searchListMovie = new ArrayList<>();
         searchListSerie = new ArrayList<>();
         pane.getChildren().removeAll(images); //fjerner alle images fra gridpane
@@ -481,12 +395,12 @@ public class FXController implements Initializable {
         if(searchListMovie.size()<20){
             y=0;
         }
+        search(x, y, noGenreError,searchListMovie,searchListSerie);
+    }
+
+    private void search(int x, int y, Text noGenreError,ArrayList<Medie> searchListMovie,ArrayList<Medie> searchListSerie) throws FileNotFoundException {
         for (Medie m : searchListMovie) {
-                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-                ImageView img = new ImageView(image);
-                img.setImage(image);
-                images.add(img);
+                ImageView img = movie(m);
                 pane.add(img, x, y);
                 x++;
                 //y++;
@@ -497,7 +411,8 @@ public class FXController implements Initializable {
                 getInfo(img, m);
             }
 
-        x = 0; y = 3;
+        x = 0;
+        y = 3;
         if(searchListSerie.size()<20){
             y=0;}
 
@@ -506,11 +421,7 @@ public class FXController implements Initializable {
         }
 
         for (Medie m : searchListSerie) {
-                FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
-                Image image = new Image(fl);
-                ImageView img = new ImageView(image);
-                img.setImage(image);
-                images.add(img);
+                ImageView img = serie(m);
                 paneSerie.add(img, x, y);
                 x++;
                 //y++;
@@ -520,13 +431,13 @@ public class FXController implements Initializable {
                 }
                 getInfo(img,m);
             }
-        }
+    }
 
     public void addMedie(Medie m) throws FileNotFoundException {
         if(!myList.contains(m)){
             myList.add(m);}
         else {
-            if(m instanceof Movie a) {
+            if(m instanceof Movie) {
                 alertWarning.setContentText("This movie is already on your list");
                 alertWarning.setAlertType(Alert.AlertType.WARNING);
                 alertWarning.show();

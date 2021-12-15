@@ -1,7 +1,5 @@
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class FileManagement {
@@ -11,12 +9,15 @@ public class FileManagement {
     private static String str;
     private static Medie medie;
 
+
     //loader filer for Movie og Serie
     public ArrayList<Medie> loadFile() {
         arr = new ArrayList<>();
         try{
             //læser txt for film med BufferedReader og gemmer i Array
-            BufferedReader br1 = new BufferedReader(new FileReader("src/film.txt"));
+           // BufferedReader br1 = new BufferedReader(new FileReader("src/film.txt"));
+            InputStream inputStream1 = getClass().getResourceAsStream("film.txt");
+            BufferedReader br1 = new BufferedReader(new InputStreamReader(inputStream1));
             while ((str = br1.readLine())!=null){
                 String[] line = str.trim().split(";");
                 medie = new Movie(line[0],line[1],line[2],line[3]);
@@ -24,14 +25,19 @@ public class FileManagement {
             }
 
             //læser txt for serier med BufferedReader og gemmer i Array
-            BufferedReader br2 = new BufferedReader(new FileReader("src/serier.txt"));
+            InputStream inputStream2 = getClass().getResourceAsStream("serier.txt");
+            BufferedReader br2 = new BufferedReader(new InputStreamReader(inputStream2));
+            //BufferedReader br2 = new BufferedReader(new FileReader("src/serier.txt"));
             while ((str = br2.readLine()) != null) {
                 String[] line = str.trim().split(";");
                 medie = new Serie(line[0], line[1], line[2], line[3], line[4]);
                 arr.add(medie);
             }
 
-        }catch (IOException e){
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
             e.printStackTrace();
         }
         return arr;

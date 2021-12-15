@@ -37,6 +37,7 @@ public class FXController implements Initializable {
     private static ArrayList<Button> newUsersBtn;
     public Alert alert;
     public Alert alertWarning;
+    private Alert popupAlert    ;
     private User user;
     private FileManagement filemanagement;
     private static ArrayList<User> users;
@@ -79,7 +80,6 @@ public class FXController implements Initializable {
             getInfo(img,m);
         }
     }
-
     @FXML
     private void initializeSerie() throws FileNotFoundException {
         int x = 0;
@@ -105,6 +105,7 @@ public class FXController implements Initializable {
     private void userBtn() {
         users = new ArrayList<>();
         //tjekker om username er empty
+        System.out.println(userAlert().booleanValue());
         if(userAlert()){
             userAlert();
         }else{
@@ -149,7 +150,7 @@ public class FXController implements Initializable {
 
     }
 
-   private Boolean userAlert(){
+    private Boolean userAlert(){
        if(username.getText().isEmpty()){
            alert.setContentText("Username can't be empty"
                    +'\n'+"Please pick ausername");
@@ -298,6 +299,7 @@ public class FXController implements Initializable {
 
             alert.setAlertType(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(m.getTitle());
+
             GridPane gridPop = new GridPane();
             gridPop.addRow(0,new Label("   Year: " + m.getYear(), new Label("Rating: "+ m.getRating())));
             gridPop.addRow(1,new Label("Genre: " + m.getGenre()));
@@ -313,7 +315,6 @@ public class FXController implements Initializable {
             event.consume();
         });
     }
-
 
     private void btnMyList(Button add, Button remove,Button play,Medie m){
         //tilføjer event handler til button
@@ -338,7 +339,7 @@ public class FXController implements Initializable {
             Popup popup = new Popup();
             FileInputStream fl = null;
             try {
-                fl = new FileInputStream("src/GreatClaus.jpg");
+                fl = new FileInputStream("Materials/GreatClaus.jpg");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -359,6 +360,7 @@ public class FXController implements Initializable {
             btnPressed.consume();
         });
     }
+
     public void refreshSearch() throws FileNotFoundException {
         errorMes();
         pane.getChildren().removeAll(images); //fjerner alle images fra gridpane
@@ -456,7 +458,7 @@ public class FXController implements Initializable {
         if(myList.contains(m)){
             myList.remove(m);}
         else {
-            if(m instanceof Movie a) {
+            if(m instanceof Movie) {
                 alertWarning.setContentText("This movie isn't on your list");
                 alertWarning.setAlertType(Alert.AlertType.WARNING);
                 alertWarning.show();

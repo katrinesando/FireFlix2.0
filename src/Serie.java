@@ -16,10 +16,9 @@ public class Serie extends Medie {
         try
         {
             // Grab the InputStream for the image and save in img
-            File file = new File("src\\serieforsider\\" + title+".jpg");
-            BufferedImage img = ImageIO.read(file);
+            File file = new File("src/serieforsider/" + title+".jpg");
             //java.awt.Desktop.getDesktop().open(file);
-            return img;
+            return ImageIO.read(file);
 
         } catch (IOException e) {
             System.out.println("The serie image was not loaded for: "+title);

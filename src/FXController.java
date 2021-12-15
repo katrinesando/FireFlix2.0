@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,10 +44,12 @@ public class FXController implements Initializable {
     private static ArrayList<ImageView> images;
     private int userAmount = 0,x=0;
     private static ArrayList<Button> newUsersBtn;
-    public Alert alert,popup;
+    public Alert alert;
+    public Alert alertWarning;
     private User user;
     private FileManagement filemanagement;
     private static ArrayList<User> users;
+
 
 
     @FXML
@@ -58,9 +61,9 @@ public class FXController implements Initializable {
 
         for (Medie m : arr) {
             if (m instanceof Movie) {
-                //FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
-                //Image image = new Image(fl);
-                Image image = new Image(getClass().getResourceAsStream("/filmplakater/" + m.getTitle() + ".jpg"));
+                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
+                Image image = new Image(fl);
+
                 img = new ImageView(image);
                 img.setImage(image);
                 images.add(img);
@@ -85,9 +88,9 @@ public class FXController implements Initializable {
 
         for (Medie m : arr) {
             if (m instanceof Serie) {
-//                FileInputStream fl = new FileInputStream("Materials/serieforsider/" + m.getTitle() + ".jpg");
-//                Image image = new Image(fl);
-                Image image = new Image(getClass().getResourceAsStream("/serieforsider/" + m.getTitle() + ".jpg"));
+                FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
+                Image image = new Image(fl);
+
                 img = new ImageView(image);
                 img.setImage(image);
                 images.add(img);
@@ -107,23 +110,41 @@ public class FXController implements Initializable {
         users = new ArrayList<>();
         //tjekker om username er empty
         if(username.getText().isEmpty()){
-            alert.setContentText("Username can't be empty");
+            alert.setContentText("Username can't be empty"
+                    +'\n'+"Please pick ausername");
             alert.setAlertType(Alert.AlertType.WARNING);
             alert.show();
+        //tjekker om age er empty
         }else if(age.getText().isEmpty()){
-            alert.setContentText("Age field can't be empty");
+            alert.setContentText("Age field can't be empty"
+                    +'\n'+"Please fill out your age");
+            alert.setAlertType(Alert.AlertType.WARNING);
+            alert.show();
+        //tjekker om age er et tal - isNumeric metoden er nederst i dokumentet
+        }else if(!isNumeric((age.getText()))){
+            alert.setContentText("Age has to be a number"
+                    +'\n'+"Please enter a valid number");
+            alert.setAlertType(Alert.AlertType.WARNING);
+            alert.show();
+        //tjekker om age er et positivt tal
+        }else if(age.getText().contains("-")||age.getText().equals("0")){
+            alert.setContentText("Age has to be a positive number"
+                    +'\n'+"Please enter a valid number");
             alert.setAlertType(Alert.AlertType.WARNING);
             alert.show();
         }else{
             //tilføjer user
             if(userAmount<4){
-                /*for(User u:users){
-                    if(username.getText().toLowerCase().equals(u.getName())){
-                        alert.setContentText("There already exists a user with that username");
+            //tjekker om der allerrede eksistere en user med det brugernavn
+                for(Button b : newUsersBtn){
+                    if(username.getText().toLowerCase().equals(b.getText().toLowerCase())){
+                        alert.setContentText("There already exists a user with that username"
+                                +'\n'+"Please pick another username");
                         alert.setAlertType(Alert.AlertType.WARNING);
                         alert.show();
+                        return;
                     }
-                }*/
+                }
                 user = new User(username.getText(),age.getText());
                 users.add(user);
                 Button newUser = new Button(user.getName());
@@ -139,7 +160,8 @@ public class FXController implements Initializable {
                 newUser.setVisible(false);
                 x++;userAmount++;
             }else{//hvis der er flere end 4 user
-                alert.setContentText("4 users is the max to be added");
+                alert.setContentText("You can't have more than 4 users"
+                        +'\n'+"Please pick an existing user");
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.show();
             }
@@ -158,6 +180,7 @@ public class FXController implements Initializable {
         toolBar.setVisible(false);
         for(Button b : newUsersBtn){
             b.setVisible(true);
+            b.setPadding(new Insets(15));
         }
     }
 
@@ -170,9 +193,8 @@ public class FXController implements Initializable {
         }
         for (Medie m : myList) {
             if (m instanceof Movie) {
-//                FileInputStream fl = new FileInputStream("Materials/filmplakater/" + m.getTitle() + ".jpg");
-//                Image image = new Image(fl);
-                Image image = new Image(getClass().getResourceAsStream("/filmplakater/" + m.getTitle() + ".jpg"));
+                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
+                Image image = new Image(fl);
 
                 ImageView img = new ImageView(image);
                 img.setImage(image);
@@ -187,9 +209,9 @@ public class FXController implements Initializable {
                 getInfo(img,m);
             }
             if (m instanceof Serie) {
-//                FileInputStream fl = new FileInputStream("Materials/serieforsider/" + m.getTitle() + ".jpg");
-//                javafx.scene.image.Image image = new Image(fl);
-                Image image = new Image(getClass().getResourceAsStream("/serieforsider/" + m.getTitle() + ".jpg"));
+                FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
+                javafx.scene.image.Image image = new Image(fl);
+
                 javafx.scene.image.ImageView img = new javafx.scene.image.ImageView(image);
                 img.setImage(image);
                 images.add(img);
@@ -214,7 +236,7 @@ public class FXController implements Initializable {
         images = new ArrayList<>();
         newUsersBtn = new ArrayList<>();
         alert = new Alert(Alert.AlertType.NONE);
-        popup = new Alert(Alert.AlertType.NONE);
+        alertWarning = new Alert(Alert.AlertType.NONE);
         filemanagement = new FileManagement();
         arr = filemanagement.loadFile();
 
@@ -266,9 +288,8 @@ public class FXController implements Initializable {
         }
 
         for (Medie m : searchListMovie) {
-//            FileInputStream fl = new FileInputStream("Materials/filmplakater/" + m.getTitle() + ".jpg");
-//            Image image = new Image(fl);
-            Image image = new Image(getClass().getResourceAsStream("/filmplakater/" + m.getTitle() + ".jpg"));
+            FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
+            Image image = new Image(fl);
             ImageView img = new ImageView(image);
             img.setImage(image);
             images.add(img);
@@ -291,9 +312,8 @@ public class FXController implements Initializable {
         }
 
         for (Medie m : searchListSerie) {
-//            FileInputStream fl = new FileInputStream("Materials/serieforsider/" + m.getTitle() + ".jpg");
-//            Image image = new Image(fl);
-            Image image = new Image(getClass().getResourceAsStream("/serieforsider/" + m.getTitle() + ".jpg"));
+            FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
+            Image image = new Image(fl);
             ImageView img = new ImageView(image);
             img.setImage(image);
             images.add(img);
@@ -318,15 +338,19 @@ public class FXController implements Initializable {
 
             btnMyList(add,remove,play,m);
 
-            popup.setAlertType(Alert.AlertType.CONFIRMATION);
-            popup.setHeaderText(m.getTitle());
+            alert.setAlertType(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(m.getTitle());
             GridPane gridPop = new GridPane();
-            gridPop.addRow(0,new Label(" Genre: " + m.getGenre()));
-            gridPop.addRow(1,new Label(" Year: " + m.getYear()),new Label("Rating: " + m.getRating()));
-            gridPop.addRow(2,play,add,remove);
-            popup.getDialogPane().setContent(gridPop);
+            gridPop.addRow(0,new Label("   Year: " + m.getYear(), new Label("Rating: "+ m.getRating())));
+            gridPop.addRow(1,new Label("Genre: " + m.getGenre()));
+            if(m instanceof Serie s){
+                gridPop.addRow(2,new Label("Season & episodes: " + s.getEpisode()));
+            }
+            gridPop.addRow(3,play,add,remove);
 
-            popup.show();
+            alert.getDialogPane().setContent(gridPop);
+
+            alert.show();
 
             event.consume();
         });
@@ -397,7 +421,7 @@ public class FXController implements Initializable {
             Popup popup = new Popup();
             FileInputStream fl = null;
             try {
-                fl = new FileInputStream("Materials/GreatClaus.jpg");
+                fl = new FileInputStream("src/GreatClaus.jpg");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -458,11 +482,9 @@ public class FXController implements Initializable {
             y=0;
         }
         for (Medie m : searchListMovie) {
-//                FileInputStream fl = new FileInputStream("Materials/filmplakater/" + m.getTitle() + ".jpg");
-//                Image image = new Image(fl);
-            Image image = new Image(getClass().getResourceAsStream("/filmplakater/" + m.getTitle() + ".jpg"));
-
-            ImageView img = new ImageView(image);
+                FileInputStream fl = new FileInputStream("src/filmplakater/" + m.getTitle() + ".jpg");
+                Image image = new Image(fl);
+                ImageView img = new ImageView(image);
                 img.setImage(image);
                 images.add(img);
                 pane.add(img, x, y);
@@ -484,11 +506,9 @@ public class FXController implements Initializable {
         }
 
         for (Medie m : searchListSerie) {
-//                FileInputStream fl = new FileInputStream("Materials/serieforsider/" + m.getTitle() + ".jpg");
-//                Image image = new Image(fl);
-            Image image = new Image(getClass().getResourceAsStream("/serieforsider/" + m.getTitle() + ".jpg"));
-
-            ImageView img = new ImageView(image);
+                FileInputStream fl = new FileInputStream("src/serieforsider/" + m.getTitle() + ".jpg");
+                Image image = new Image(fl);
+                ImageView img = new ImageView(image);
                 img.setImage(image);
                 images.add(img);
                 paneSerie.add(img, x, y);
@@ -506,9 +526,15 @@ public class FXController implements Initializable {
         if(!myList.contains(m)){
             myList.add(m);}
         else {
-            alert.setContentText("This medie is already on your list");
-            alert.setAlertType(Alert.AlertType.WARNING);
-            alert.show();
+            if(m instanceof Movie a) {
+                alertWarning.setContentText("This movie is already on your list");
+                alertWarning.setAlertType(Alert.AlertType.WARNING);
+                alertWarning.show();
+            } else {
+                alertWarning.setContentText("This serie is already on your list");
+                alertWarning.setAlertType(Alert.AlertType.WARNING);
+                alertWarning.show();
+            }
         }
         paneMyList.getChildren().removeAll(images);
         EmptyMyListError.setVisible(false);
@@ -519,16 +545,21 @@ public class FXController implements Initializable {
         if(myList.contains(m)){
             myList.remove(m);}
         else {
-            alert.setContentText("This medie isn't on your list");
-            alert.setAlertType(Alert.AlertType.WARNING);
-            alert.show();
+            if(m instanceof Movie a) {
+                alertWarning.setContentText("This movie isn't on your list");
+                alertWarning.setAlertType(Alert.AlertType.WARNING);
+                alertWarning.show();
+            } else {
+                alertWarning.setContentText("This serie isn't on your list");
+                alertWarning.setAlertType(Alert.AlertType.WARNING);
+                alertWarning.show();
+            }
         }
         paneMyList.getChildren().removeAll(images);
         EmptyMyListError.setVisible(false);
         initializeMyList();
     }
 
-   //menu
     public void searchAction() throws FileNotFoundException {searchGenre( "Action");}
     public void searchAdventure() throws FileNotFoundException {searchGenre( "Adventure");}
     public void searchBiography() throws FileNotFoundException {searchGenre( "Biography");}
@@ -550,6 +581,17 @@ public class FXController implements Initializable {
     public void searchWar() throws FileNotFoundException {searchGenre( "War");}
     public void searchWestern() throws FileNotFoundException {searchGenre( "Western");}
 
+    // metode for at tjekke om en string er et tal: https://stackabuse.com/java-check-if-string-is-a-number/
+    public static boolean isNumeric(String string) {
+        int intValue;
+        if(string == null || string.equals("")) {
+            return false;
+        }try {
+            intValue = Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e) {}
+        return false;
+    }
 }
 
 

@@ -154,25 +154,25 @@
     </TabPane>
       <Pane fx:id="userPane" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="btn" alignment="CENTER" layoutX="567.0" layoutY="393.0" mnemonicParsing="false" onAction="#userBtn" prefHeight="112.0" prefWidth="146.0" text="Create User" />
-            <Text layoutX="557.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FireFlix">
+            <Button fx:id="btn" alignment="CENTER" layoutX="569.0" layoutY="361.0" mnemonicParsing="false" onAction="#userBtn" prefHeight="112.0" prefWidth="146.0" text="Create User" />
+            <Text layoutX="559.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FireFlix">
                <font>
                   <Font name="System Bold" size="56.0" />
                </font>
             </Text>
-            <TextField fx:id="username" layoutX="613.0" layoutY="292.0" />
-            <TextField fx:id="age" layoutX="613.0" layoutY="339.0" />
-            <Text layoutX="521.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:">
+            <TextField fx:id="username" layoutX="615.0" layoutY="260.0" />
+            <TextField fx:id="age" layoutX="615.0" layoutY="307.0" />
+            <Text layoutX="523.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="521.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:">
+            <Text layoutX="523.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <GridPane fx:id="paneNewUser" layoutX="217.0" layoutY="582.0" prefHeight="147.0" prefWidth="878.0">
+            <GridPane fx:id="paneNewUser" alignment="CENTER" layoutX="280.0" layoutY="501.0" prefHeight="147.0" prefWidth="878.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

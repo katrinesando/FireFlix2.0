@@ -26,7 +26,6 @@ public class FXController implements Initializable {
     @FXML private Text noGenreError,noSearchMovieError,noSearchSerieError,EmptyMyListError;
     @FXML private ToolBar toolBar;
 
-
     public Medie m;
     private static ArrayList<Medie> arr;
     private static ArrayList<Medie> myList,searchListMovie,searchListSerie;
@@ -35,11 +34,12 @@ public class FXController implements Initializable {
     private static ArrayList<Button> newUsersBtn;
     public Alert alert;
     public Alert alertWarning;
+    private Alert popup;
     private User user;
     private FileManagement filemanagement;
     private static ArrayList<User> users;
 
-
+    //laver imageview af movie og serie
     private ImageView movie(Medie m){
         Image image = new Image(getClass().getResourceAsStream("/filmplakater/" + m.getTitle() + ".jpg"));
 
@@ -57,10 +57,11 @@ public class FXController implements Initializable {
         return img;
     }
 
+    //initalisere movie og gemmer i array
     @FXML
     private void initializeMovie() throws FileNotFoundException {
-        int x = 0;//1 virker
-        int y = 3;//3 virker
+        int x = 0;
+        int y = 3;
 
         ImageView img = new ImageView();
 
@@ -77,6 +78,7 @@ public class FXController implements Initializable {
             getInfo(img,m);
         }
     }
+    //initalisere serie og gemmer i array
     @FXML
     private void initializeSerie() throws FileNotFoundException {
         int x = 0;
@@ -149,16 +151,16 @@ public class FXController implements Initializable {
 
     private Boolean userAlert(){
        if(username.getText().isEmpty()){
+           alert.setAlertType(Alert.AlertType.WARNING);
            alert.setContentText("Username can't be empty"
                    +'\n'+"Please pick a username");
-           alert.setAlertType(Alert.AlertType.WARNING);
            alert.show();
            return true;
            //tjekker om age er empty
        }else if(age.getText().isEmpty()){
+           alert.setAlertType(Alert.AlertType.WARNING);
            alert.setContentText("Age field can't be empty"
                    +'\n'+"Please fill out your age");
-           alert.setAlertType(Alert.AlertType.WARNING);
            alert.show();
            return true;
            //tjekker om age er et tal - isNumeric metoden er nederst i dokumentet
@@ -219,8 +221,6 @@ public class FXController implements Initializable {
                 getInfo(img,m);
             }
         }
-
-
     }
 
     @Override
@@ -235,6 +235,7 @@ public class FXController implements Initializable {
 
         alert = new Alert(Alert.AlertType.NONE);
         alertWarning = new Alert(Alert.AlertType.NONE);
+        popup = new Alert(Alert.AlertType.NONE);
         filemanagement = new FileManagement();
         arr = filemanagement.loadFile();
 
@@ -294,8 +295,9 @@ public class FXController implements Initializable {
 
             btnMyList(add,remove,play,m);
 
-            alert.setAlertType(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(m.getTitle());
+            popup.setAlertType(Alert.AlertType.CONFIRMATION);
+            popup.setHeaderText(m.getTitle());
+            popup.setTitle("Information");
 
             GridPane gridPop = new GridPane();
             gridPop.addRow(0,new Label("   Year: " + m.getYear(), new Label("Rating: "+ m.getRating())));
@@ -304,10 +306,8 @@ public class FXController implements Initializable {
                 gridPop.addRow(2,new Label("Season & episodes: " + s.getEpisode()));
             }
             gridPop.addRow(3,play,add,remove);
-
-            alert.getDialogPane().setContent(gridPop);
-
-            alert.show();
+            popup.getDialogPane().setContent(gridPop);
+            popup.show();
 
             event.consume();
         });
@@ -352,7 +352,7 @@ public class FXController implements Initializable {
             if (!popup.isShowing()){
                 System.out.println(scrollPane.getHeight());
                 System.out.println(scrollPane.getWidth());
-                popup.show(root,(scrollPane.getHeight()),(scrollPane.getWidth()));
+                popup.show(root,(root.getHeight()),(root.getWidth()));
             }
             btnPressed.consume();
         });

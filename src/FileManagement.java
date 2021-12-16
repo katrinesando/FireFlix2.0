@@ -50,7 +50,6 @@ public class FileManagement {
         for(Medie m : arr){
             poster.add(m.getImage(m.getTitle()));
         }
-        System.out.println(poster.size());
     }
 
 

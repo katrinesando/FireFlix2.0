@@ -1,11 +1,9 @@
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
 public class FileManagement {
     //felter
     private static ArrayList<Medie> arr;
-    private static ArrayList<BufferedImage> poster;
     private static String str;
     private static Medie medie;
 
@@ -42,15 +40,5 @@ public class FileManagement {
         }
         return arr;
     }
-
-    //kobler alle film til poster og gemmer i array
-    private static void poster(){
-        poster = new ArrayList<>();
-        //loadFile();
-        for(Medie m : arr){
-            poster.add(m.getImage(m.getTitle()));
-        }
-    }
-
 
 }

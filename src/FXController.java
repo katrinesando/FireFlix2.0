@@ -7,9 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
 
 import java.io.*;
 import java.net.URL;
@@ -18,10 +16,8 @@ import java.util.ResourceBundle;
 
 public class FXController implements Initializable {
     @FXML private GridPane pane,paneMyList,paneSerie,paneNewUser;
-    @FXML private ScrollPane scrollPane;
     @FXML private Pane userPane;
     @FXML private TabPane tab;
-    @FXML private AnchorPane root;
     @FXML private TextField username,age,searchBar;
     @FXML private Text noGenreError,noSearchMovieError,noSearchSerieError,EmptyMyListError;
     @FXML private ToolBar toolBar;
@@ -280,45 +276,11 @@ public class FXController implements Initializable {
         if(searchListMovie.isEmpty()){
             noSearchMovieError.setVisible(true);
         }
-
-        for (Medie m : searchListMovie) {
-            ImageView img = movie(m);
-            pane.add(img, x, y);
-            x++;
-            //y++;
-            if (x == 10) {
-                y++;
-                x = 0;
-            }
-            getInfo(img, m);
-        }
-
-        x = 0;
-        y = 3;
-        if(searchListSerie.size()<20){
-            y=0;}
-
-        if(searchListSerie.isEmpty()){
-            noGenreError.setVisible(true);
-        }
-
-        for (Medie m : searchListSerie) {
-            ImageView img = serie(m);
-            paneSerie.add(img, x, y);
-            x++;
-            //y++;
-            if (x == 10) {
-                y++;
-                x = 0;
-            }
-            getInfo(img,m);
-        }
+        search( x,  y,  noGenreError, searchListMovie,searchListSerie);
     }
 
     //pop up window med alert
     private void getInfo(ImageView img, Medie m){
-        Font myFont = new Font("Serie", 16);
-
         img.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             Button add = new Button("Add to List");
             Button remove = new Button("Delete from List");
@@ -427,38 +389,7 @@ public class FXController implements Initializable {
         if(searchListMovie.size()<20){
             y=0;
         }
-        for (Medie m : searchListMovie) {
-            ImageView img = movie(m);
-            pane.add(img, x, y);
-            x++;
-            //y++;
-            if (x == 10) {
-                y++;
-                x = 0;
-            }
-            getInfo(img, m);
-        }
-
-        x = 0;
-        y = 3;
-        if(searchListSerie.size()<20){
-            y=0;}
-
-        if(searchListSerie.isEmpty()){
-            noGenreError.setVisible(true);
-        }
-
-        for (Medie m : searchListSerie) {
-            ImageView img = serie(m);
-            paneSerie.add(img, x, y);
-            x++;
-            //y++;
-            if (x == 10) {
-                y++;
-                x = 0;
-            }
-            getInfo(img,m);
-        }
+        search( x,  y,  noGenreError, searchListMovie,searchListSerie);
     }
 
     private void search(int x, int y, Text noGenreError,ArrayList<Medie> searchListMovie,ArrayList<Medie> searchListSerie) {
@@ -530,6 +461,18 @@ public class FXController implements Initializable {
         initializeMyList();
     }
 
+    // metode for at tjekke om en string er et tal: https://stackabuse.com/java-check-if-string-is-a-number/
+    public static boolean isNumeric(String string) {
+        int intValue;
+        if(string == null || string.equals("")) {
+            return false;
+        }try {
+            intValue = Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e) {}
+        return false;
+    }
+
     public void searchAction() {searchGenre( "Action");}
     public void searchAdventure() {searchGenre( "Adventure");}
     public void searchBiography() {searchGenre( "Biography");}
@@ -551,17 +494,6 @@ public class FXController implements Initializable {
     public void searchWar() {searchGenre( "War");}
     public void searchWestern() {searchGenre( "Western");}
 
-    // metode for at tjekke om en string er et tal: https://stackabuse.com/java-check-if-string-is-a-number/
-    public static boolean isNumeric(String string) {
-        int intValue;
-        if(string == null || string.equals("")) {
-            return false;
-        }try {
-            intValue = Integer.parseInt(string);
-            return true;
-        } catch (NumberFormatException e) {}
-        return false;
-    }
 }
 
 

@@ -15,9 +15,9 @@ public class FileManagement {
         arr = new ArrayList<>();
         try{
             //læser txt for film med BufferedReader og gemmer i Array
-            BufferedReader br1 = new BufferedReader(new FileReader("Materials/film.txt"));
-            //InputStream inputStream1 = getClass().getResourceAsStream("film.txt");
-            //BufferedReader br1 = new BufferedReader(new InputStreamReader(inputStream1));
+//            BufferedReader br1 = new BufferedReader(new FileReader("Materials/film.txt"));
+            InputStream inputStream1 = getClass().getResourceAsStream("film.txt");
+            BufferedReader br1 = new BufferedReader(new InputStreamReader(inputStream1));
             while ((str = br1.readLine())!=null){
                 String[] line = str.trim().split(";");
                 medie = new Movie(line[0],line[1],line[2],line[3]);
@@ -25,9 +25,9 @@ public class FileManagement {
             }
 
             //læser txt for serier med BufferedReader og gemmer i Array
-            //InputStream inputStream2 = getClass().getResourceAsStream("serier.txt");
-            //BufferedReader br2 = new BufferedReader(new InputStreamReader(inputStream2));
-            BufferedReader br2 = new BufferedReader(new FileReader("Materials/serier.txt"));
+            InputStream inputStream2 = getClass().getResourceAsStream("serier.txt");
+            BufferedReader br2 = new BufferedReader(new InputStreamReader(inputStream2));
+//            BufferedReader br2 = new BufferedReader(new FileReader("Materials/serier.txt"));
             while ((str = br2.readLine()) != null) {
                 String[] line = str.trim().split(";");
                 medie = new Serie(line[0], line[1], line[2], line[3], line[4]);

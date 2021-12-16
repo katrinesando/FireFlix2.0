@@ -295,6 +295,7 @@ public class FXController implements Initializable {
 
             btnMyList(add,remove,play,m);
 
+            popup.setGraphic(null);
             popup.setAlertType(Alert.AlertType.CONFIRMATION);
             popup.setHeaderText(m.getTitle());
             popup.setTitle("Information");
@@ -333,27 +334,29 @@ public class FXController implements Initializable {
             btnPressed.consume();
         });
         play.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
-            Popup popup = new Popup();
+            Alert popupPlay = new Alert(Alert.AlertType.CONFIRMATION);
+
             FileInputStream fl = null;
             try {
-                fl = new FileInputStream("Materials/GreatClaus.jpg");
+                fl = new FileInputStream("Materials/playingBtn.png");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
             Image image = new Image(fl);
-
             ImageView img = new ImageView(image);
             img.setImage(image);
-            img.preserveRatioProperty();
+
             img.setPreserveRatio(true);
-            img.setFitHeight(500);
-            popup.getContent().add(img);
-            popup.setAutoHide(true);
-            if (!popup.isShowing()){
-                System.out.println(scrollPane.getHeight());
-                System.out.println(scrollPane.getWidth());
-                popup.show(root,(root.getHeight()),(root.getWidth()));
-            }
+            img.setFitHeight(150);
+
+            //viser popup menu med play button
+            popupPlay.getDialogPane().setPrefSize(200,200);
+            popupPlay.getDialogPane().setHeader(img);
+            popupPlay.getDialogPane().setGraphic(null);
+            popupPlay.setHeaderText("");
+            popupPlay.setTitle("Now Playing: " + m.getTitle());
+            popup.hide();
+            popupPlay.show();
             btnPressed.consume();
         });
     }

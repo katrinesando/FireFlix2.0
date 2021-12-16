@@ -104,7 +104,6 @@ public class FXController implements Initializable {
     private void userBtn() {
         users = new ArrayList<>();
         //tjekker om username er empty
-        //System.out.println(userAlert().booleanValue());
         if(userAlert()){
             userAlert();
         }else{
@@ -351,7 +350,6 @@ public class FXController implements Initializable {
         add.addEventHandler(MouseEvent.MOUSE_CLICKED, btnPressed -> {
             try {
                 addMedie(m);
-                System.out.println(m.getTitle());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

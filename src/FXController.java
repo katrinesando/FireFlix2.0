@@ -32,8 +32,8 @@ public class FXController implements Initializable {
     private static ArrayList<ImageView> images;
     private int userAmount = 0,x=0;
     private static ArrayList<Button> newUsersBtn;
-    public Alert alert;
-    public Alert alertWarning;
+    private Alert alert;
+    private Alert alertWarning;
     private Alert popup;
     private User user;
     private FileManagement filemanagement;
@@ -255,7 +255,8 @@ public class FXController implements Initializable {
 
     public void searchInput() {
         errorMes();
-
+        searchListMovie.clear();
+        searchListSerie.clear();
         pane.getChildren().removeAll(images); //fjerner alle images fra gridpane
         paneSerie.getChildren().removeAll(images); //fjerner alle images fra gridpane
 
@@ -281,7 +282,38 @@ public class FXController implements Initializable {
             noSearchMovieError.setVisible(true);
         }
 
-        search(x, y, noSearchSerieError,searchListMovie,searchListSerie);
+        for (Medie m : searchListMovie) {
+            ImageView img = movie(m);
+            pane.add(img, x, y);
+            x++;
+            //y++;
+            if (x == 10) {
+                y++;
+                x = 0;
+            }
+            getInfo(img, m);
+        }
+
+        x = 0;
+        y = 3;
+        if(searchListSerie.size()<20){
+            y=0;}
+
+        if(searchListSerie.isEmpty()){
+            noGenreError.setVisible(true);
+        }
+
+        for (Medie m : searchListSerie) {
+            ImageView img = serie(m);
+            paneSerie.add(img, x, y);
+            x++;
+            //y++;
+            if (x == 10) {
+                y++;
+                x = 0;
+            }
+            getInfo(img,m);
+        }
     }
 
     //pop up window med alert
@@ -375,8 +407,8 @@ public class FXController implements Initializable {
     public void searchGenre(String input) {
         errorMes();
 
-        searchListMovie = new ArrayList<>();
-        searchListSerie = new ArrayList<>();
+        searchListMovie.clear();
+        searchListSerie.clear();
         pane.getChildren().removeAll(images); //fjerner alle images fra gridpane
         paneSerie.getChildren().removeAll(images); //fjerner alle images fra gridpane
 
@@ -397,7 +429,38 @@ public class FXController implements Initializable {
         if(searchListMovie.size()<20){
             y=0;
         }
-        search(x, y, noGenreError,searchListMovie,searchListSerie);
+        for (Medie m : searchListMovie) {
+            ImageView img = movie(m);
+            pane.add(img, x, y);
+            x++;
+            //y++;
+            if (x == 10) {
+                y++;
+                x = 0;
+            }
+            getInfo(img, m);
+        }
+
+        x = 0;
+        y = 3;
+        if(searchListSerie.size()<20){
+            y=0;}
+
+        if(searchListSerie.isEmpty()){
+            noGenreError.setVisible(true);
+        }
+
+        for (Medie m : searchListSerie) {
+            ImageView img = serie(m);
+            paneSerie.add(img, x, y);
+            x++;
+            //y++;
+            if (x == 10) {
+                y++;
+                x = 0;
+            }
+            getInfo(img,m);
+        }
     }
 
     private void search(int x, int y, Text noGenreError,ArrayList<Medie> searchListMovie,ArrayList<Medie> searchListSerie) {
